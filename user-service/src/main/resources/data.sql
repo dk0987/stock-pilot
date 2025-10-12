@@ -47,7 +47,7 @@ INSERT INTO roles (role_id, name, description) VALUES
 ('a0e9b8c7-d6f5-e4d3-c2b1-100000000002', 'INVENTORY_MANAGER', 'Manages Stock'),
 ('a0e9b8c7-d6f5-e4d3-c2b1-100000000003', 'SALES_MANAGER', 'Manages Sales'),
 ('a0e9b8c7-d6f5-e4d3-c2b1-100000000004', 'VIEWER', 'View-only access'),
-'a0e9b8c7-d6f5-e4d3-c2b1-100000000005', 'APPROVER', 'Approves requests');
+('a0e9b8c7-d6f5-e4d3-c2b1-100000000005', 'APPROVER', 'Approves requests');
 
 -- Insert 100 users with varied test data
 INSERT INTO CustomUser (

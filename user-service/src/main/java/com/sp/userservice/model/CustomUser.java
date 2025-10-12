@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "customuser")
 public class CustomUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

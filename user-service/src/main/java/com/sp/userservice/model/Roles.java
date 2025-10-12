@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Table(name = "roles")
 public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
