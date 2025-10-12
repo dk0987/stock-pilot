@@ -19,6 +19,8 @@ public class CustomUser {
 //   User Name
     private String username ;
 
+
+
     @NotNull
     @Email
     @Column(unique = true)
@@ -28,7 +30,6 @@ public class CustomUser {
     @NotNull
 //    User Password
     private String password;
-
 
     @NotNull
 //    User First name
@@ -44,6 +45,10 @@ public class CustomUser {
     private LocalDate created_at;
 //    User ID modified on
     private LocalDate updated_at;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id",nullable = false)
+    private Roles role;
 
     public UUID getId() {
         return id;
@@ -125,8 +130,11 @@ public class CustomUser {
         this.updated_at = updated_at;
     }
 
+    public Roles getRole() {
+        return role;
+    }
 
-
-
-
+    public void setRole(Roles role) {
+        this.role = role;
+    }
 }
