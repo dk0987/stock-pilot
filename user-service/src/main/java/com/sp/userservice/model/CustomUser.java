@@ -19,8 +19,6 @@ public class CustomUser {
 //   User Name
     private String username ;
 
-
-
     @NotNull
     @Email
     @Column(unique = true)
