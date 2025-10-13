@@ -1,0 +1,15 @@
+### GET request to example server
+POST http://localhost:4000/users/create
+Content-Type: application/json
+
+{
+    "username": "iAMDk",
+    "email": "ydk0888@gamil.com",
+    "first_name": "Dilip Kumar",
+    "last_name": "Yadav",
+    "password": "7355228554",
+    "re_password": "7355228554",
+    "phone_number": "+818095673105",
+    "role": 2
+}
+###

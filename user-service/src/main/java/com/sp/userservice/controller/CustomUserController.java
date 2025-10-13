@@ -1,11 +1,10 @@
 package com.sp.userservice.controller;
 
+import com.sp.userservice.dto.UserRequestDTO;
 import com.sp.userservice.dto.UserResponseDTO;
 import com.sp.userservice.service.CustomUserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +21,10 @@ public class CustomUserController {
     public ResponseEntity<List<UserResponseDTO>> getUsers(){
         List<UserResponseDTO> usersResponse = userService.getUsers();
         return ResponseEntity.ok().body(usersResponse);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok().body(userService.createUser(userRequestDTO));
     }
 }

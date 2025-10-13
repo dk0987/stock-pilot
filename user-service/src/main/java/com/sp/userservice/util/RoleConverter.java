@@ -27,4 +27,14 @@ public class RoleConverter {
             return Role.VIEWER.getCode(); // Default to the viewer code (5)
         }
     }
+
+    public static String getRoleName(int code) {
+        return switch (code) {
+            case 1 -> Role.ADMIN.name();
+            case 2 -> Role.INVENTORY_MANAGER.name();
+            case 3 -> Role.SALES_MANAGER.name();
+            case 4 -> Role.APPROVER.name();
+            default -> Role.VIEWER.name();
+        };
+    }
 }
