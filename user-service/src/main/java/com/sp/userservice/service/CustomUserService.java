@@ -2,7 +2,6 @@ package com.sp.userservice.service;
 
 import com.sp.userservice.dto.UserRequestDTO;
 import com.sp.userservice.dto.UserResponseDTO;
-import com.sp.userservice.dto.UserUpdateRequestDTO;
 import com.sp.userservice.exceptions.*;
 import com.sp.userservice.mapper.UserMapper;
 import com.sp.userservice.model.CustomUser;
@@ -10,16 +9,9 @@ import com.sp.userservice.model.Roles;
 import com.sp.userservice.repository.CustomUserRepository;
 import com.sp.userservice.repository.RoleRepository;
 import com.sp.userservice.util.RoleConverter;
-import jakarta.transaction.Transactional;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.UnknownHttpStatusCodeException;
 
-import java.net.HttpRetryException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -70,13 +62,23 @@ public class CustomUserService {
         }
     }
 
-    public UserResponseDTO updateUser(UserUpdateRequestDTO userRequestDTO , UUID id) {
-        String userRole = RoleConverter.getRoleName(userRequestDTO.getRole()).toUpperCase();
+    public UserResponseDTO updateUser(UserRequestDTO userRequestDTO , UUID id) {
+        String userRole = null ;
         //Existing User Check
         CustomUser user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+        //User update request role existence check
+        if (userRequestDTO.getRole() != 0){
+            userRole = RoleConverter.getRoleName(userRequestDTO.getRole()).toUpperCase();
+            //Updating role existence Check
+            if (!roleRepository.existsByName(userRole)){
+                throw new RoleNotFoundException("Role " + userRole + " not found.");
+            }
+        }
+
         //Updating Email existence check
         if (
+                userRequestDTO.getEmail() != null &&
                 !user.getEmail().equals(userRequestDTO.getEmail()) &&
                 userRepository.existsByEmail(userRequestDTO.getEmail())
         ) {
@@ -84,22 +86,21 @@ public class CustomUserService {
         }
         //Updating username existence Check
         if (
+                userRequestDTO.getUsername() != null &&
                 !user.getUsername().equals(userRequestDTO.getUsername()) &&
                 userRepository.existsByUsername(userRequestDTO.getUsername())
         ) {
             throw new UserNameUpdateException("Username is already registered");
         }
-        //Updating role existence Check
-        if (
-                !user.getRole().getName().toUpperCase().equals(userRole) &&
-                !roleRepository.existsByName(userRole)
-        ){
-            throw new RoleNotFoundException("Role " + userRole + " not found.");
-        }
 
         CustomUser updatingUser = UserMapper.toUser(userRequestDTO);
-        updatingUser.setRole(roleRepository.getByName(userRole));
+        updatingUser.setId(id);
+        updatingUser.setEmail(updatingUser.getEmail() == null ? user.getEmail() : updatingUser.getEmail());
+        updatingUser.setUsername(updatingUser.getUsername() == null ? user.getUsername() : updatingUser.getUsername());
+        updatingUser.setRole(userRole == null ? user.getRole() : roleRepository.getByName(userRole));
         updatingUser.setUpdated_at(LocalDate.now());
+        updatingUser.setCreated_at(user.getCreated_at());
+        updatingUser.setIs_active(user.isIs_active());
 
        try {
             userRepository.save(updatingUser);
@@ -109,7 +110,7 @@ public class CustomUserService {
        }
     }
 
-    public boolean updateUserStatus(UUID id) {
+    public void updateUserStatus(UUID id) {
         //Existing User Check
         CustomUser user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
@@ -117,7 +118,6 @@ public class CustomUserService {
             user.setUpdated_at(LocalDate.now());
             user.setIs_active(!user.isIs_active());
             userRepository.save(user);
-            return true;
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }

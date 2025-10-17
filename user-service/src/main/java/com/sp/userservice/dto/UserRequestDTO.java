@@ -1,27 +1,28 @@
 package com.sp.userservice.dto;
 
+import com.sp.userservice.dto.validators.CreateUserValidationGroup;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UserRequestDTO {
-    @NotBlank(message = "Username is mandatory field")
+    @NotBlank(groups = CreateUserValidationGroup.class, message = "Username is mandatory field")
     @Size(max = 100 , min = 5 , message = "Username should be between 5 to 100 characters")
     private String username;
 
-    @NotBlank(message = "First name is mandatory field")
+    @NotBlank(groups = CreateUserValidationGroup.class,message = "First name is mandatory field")
     @Size(max = 100 , message = "Username can't exceed more than 100")
     private String first_name;
     private String last_name;
 
-    @NotBlank(message = "Password is mandatory field")
+    @NotBlank(groups = CreateUserValidationGroup.class,message = "Password is mandatory field")
     @Size(min = 8 , message = "Password Should be more than 8 digit")
     private String password;
 
-    @NotBlank(message = "Re Password is mandatory field")
+    @NotBlank(groups = CreateUserValidationGroup.class,message = "Re Password is mandatory field")
     private String re_password;
 
-    @NotBlank(message = "Email is mandatory field")
+    @NotBlank(groups = CreateUserValidationGroup.class,message = "Email is mandatory field")
     @Email(message = "Valid email is required")
     private String email;
 

@@ -2,11 +2,11 @@ package com.sp.userservice.controller;
 
 import com.sp.userservice.dto.UserRequestDTO;
 import com.sp.userservice.dto.UserResponseDTO;
-import com.sp.userservice.dto.UserUpdateRequestDTO;
+import com.sp.userservice.dto.validators.CreateUserValidationGroup;
 import com.sp.userservice.service.CustomUserService;
-import jakarta.validation.Valid;
-import org.hibernate.sql.Update;
+import jakarta.validation.groups.Default;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,14 +28,16 @@ public class CustomUserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserResponseDTO> createUser(
+            @Validated({Default.class , CreateUserValidationGroup.class}) @RequestBody UserRequestDTO userRequestDTO
+    ) {
         return ResponseEntity.ok().body(userService.createUser(userRequestDTO));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDTO> updateUser(
-            @Valid  @PathVariable UUID id,
-            @RequestBody UserUpdateRequestDTO userUpdateRequestDTO
+            @PathVariable UUID id,
+            @Validated(Default.class) @RequestBody UserRequestDTO userUpdateRequestDTO
     ) {
         return ResponseEntity.ok().body(userService.updateUser(userUpdateRequestDTO , id));
     }

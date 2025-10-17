@@ -2,7 +2,6 @@ package com.sp.userservice.mapper;
 
 import com.sp.userservice.dto.UserRequestDTO;
 import com.sp.userservice.dto.UserResponseDTO;
-import com.sp.userservice.dto.UserUpdateRequestDTO;
 import com.sp.userservice.model.CustomUser;
 import com.sp.userservice.util.RoleConverter;
 
@@ -35,19 +34,6 @@ public class UserMapper {
         user.setPassword(userRequestDTO.getPassword());
         return user;
     }
-
-    public static CustomUser toUser (UserUpdateRequestDTO userRequestDTO) {
-        CustomUser user = new CustomUser();
-        user.setEmail(userRequestDTO.getEmail());
-        user.setPassword(userRequestDTO.getPassword());
-        user.setUsername(userRequestDTO.getUsername());
-        user.setFirst_name(userRequestDTO.getFirst_name());
-        user.setLast_name(userRequestDTO.getLast_name());
-        user.setPhone_number(userRequestDTO.getPhone_number());
-        return user;
-    }
-
-
 
 }
 
