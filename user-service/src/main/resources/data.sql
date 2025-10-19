@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS CustomUser (
 -- ('a0e9b8c7-d6f5-e4d3-c2b1-100000000005', 'APPROVER', 'Approves requests');
 
 -- Insert 100 users with varied test data
-INSERT INTO CustomUser (
-    id, username, email, password, first_name, last_name, phone_number, is_active, created_at, updated_at, role_id
-) VALUES
+-- INSERT INTO CustomUser (CustomUser
+--     id, username, email, password, first_name, last_name, phone_number, is_active, created_at, updated_at, role_id
+-- ) VALUES
 -- Admins (5 Users) - All Active, Full Data
 -- ('a0e9b8c7-d6f5-e4d3-c2b1-100000000008', 'sys_alice', 'alice.adams@corp.com', 'password', 'Alice', 'Adams', '555-0101', TRUE, '2022-01-10', '2024-09-01', 'a0e9b8c7-d6f5-e4d3-c2b1-100000000001');
 -- (UUID(), 'bbanner', 'bruce.b@corp.com', @hashed_password, 'Bruce', 'Banner', '555-0102', TRUE, '2023-05-15', '2023-05-15', @admin_id),
