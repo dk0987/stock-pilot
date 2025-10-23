@@ -1,4 +1,4 @@
 package com.sp.salesorderservice.model;
 
-public class SalesOrdersItem {
+public class SalesOrderItems {
 }

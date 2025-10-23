@@ -6,6 +6,16 @@
       <list>
         <option value="$PROJECT_DIR$/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse-service/pom.xml" />
+        <option value="$PROJECT_DIR$/supplier-service/pom.xml" />
+        <option value="$PROJECT_DIR$/customer-service/pom.xml" />
+        <option value="$PROJECT_DIR$/purchase-order-service/pom.xml" />
+        <option value="$PROJECT_DIR$/sales-order-service/pom.xml" />
+        <option value="$PROJECT_DIR$/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/supporting-service/pom.xml" />
+        <option value="$PROJECT_DIR$/file-management-service/pom.xml" />
+        <option value="$PROJECT_DIR$/activity-tracking-service/pom.xml" />
+        <option value="$PROJECT_DIR$/proto/pom.xml" />
       </list>
     </option>
   </component>
