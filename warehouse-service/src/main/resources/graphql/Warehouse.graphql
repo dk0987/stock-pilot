@@ -1,0 +1,61 @@
+scalar UUID
+scalar DateTime
+
+type Warehouse{
+    id      : UUID,
+    name    : String!,
+    address : String,
+    city    : String,
+    states  : String,
+    zip     : String!,
+    country : String!,
+    phone   : String!,
+    email   : String,
+    createdBy : UUID,
+    createdAt : DateTime,
+    isActive : Boolean,
+}
+
+# --- Input Types (Data In) ---
+input WarehouseCreateInput {
+    name: String!
+    address: String
+    city: String
+    states: String
+    zip: String!
+    country: String!
+    phone: String!
+    email: String
+}
+
+input WarehouseUpdateInput {
+    id: UUID! # CORRECTED: Must be UUID to match the entity and query
+    name: String
+    address: String
+    city: String
+    states: String
+    zip: String
+    country: String
+    phone: String
+    email: String
+    # Note: Fields not marked with '!' are optional for updates
+}
+
+# --- Query (Read) Operations ---
+type Query{
+    # Warehouse Queries
+    findAllWarehouse: [Warehouse!]! # Added '!' to the list and items for robustness
+    findWarehouse(id: UUID!): Warehouse
+    findWarehouseByName(name: String!): Warehouse
+}
+
+# --- Mutation (Write) Operations ---
+
+type Mutation{
+    # Warehouse Mutations
+    createWarehouse(input: WarehouseCreateInput!): Warehouse!
+    # Using Input Object for update, and requiring UUID ID
+    updateWarehouse(input: WarehouseUpdateInput!): Warehouse!
+    # Requiring UUID ID for deletion
+    deleteWarehouse(id: UUID!): Warehouse
+}
