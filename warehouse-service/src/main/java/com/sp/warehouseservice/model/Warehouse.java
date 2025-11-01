@@ -29,6 +29,7 @@ public class Warehouse {
     private boolean isActive;
     private UUID userId ;
     private LocalDateTime createdAt;
+    private UUID createdBy;
 
     public UUID getId() {
         return id;
@@ -124,5 +125,13 @@ public class Warehouse {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public UUID getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UUID createdBy) {
+        this.createdBy = createdBy;
     }
 }
