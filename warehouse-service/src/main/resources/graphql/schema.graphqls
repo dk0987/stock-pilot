@@ -1,14 +1,24 @@
+scalar double
 type InventoryStock{
-    id : UUID
+    id : [UUID!]!
     warehouse : UUID!
-    product   : UUID!
-    quantity  : Int
+    warehouseName    : String!
+    warehouseAddress : String
+    warehouseCity    : String
+    warehouseStates  : String
+    warehouseZip     : String!
+    warehouseCountry : String!
+    warehousePhone   : String!
+    warehouseEmail   : String
+    warehouseCreatedBy : UUID
+    warehouseCreatedAt : DateTime
 }
 
 #Input type
 input InventoryStockCreateInput{
     warehouse : UUID!
     product   : UUID!
+    quantity  : Int
 }
 
 input InventoryStockUpdateInput{
@@ -25,7 +35,7 @@ input InventoryStockQuanUpdateInput{
 
 extend type Query{
     findAllInventoryStock : [InventoryStock!]!
-    findById(id : UUID!) : InventoryStock!
+    findInventoryByWarehouse(warehouseId : UUID!) : InventoryStock!
 }
 
 extend type Mutation{
