@@ -1,7 +1,16 @@
 scalar UUID
 scalar DateTime
+type StockDetails{
+    stockId : UUID!
+    productId : UUID!
+    productName : String
+    productDescription : String
+    productCategory : String
+    productMaxOccupancy : Int
+    productQuantity : Int
+}
+
 type InventoryStock{
-    id : [UUID!]!
     warehouse : UUID!
     warehouseName    : String!
     warehouseAddress : String
@@ -13,6 +22,7 @@ type InventoryStock{
     warehouseEmail   : String
     warehouseCreatedBy : UUID
     warehouseCreatedAt : DateTime
+    stockDetails : [StockDetails]
 }
 
 #Input type
@@ -36,7 +46,7 @@ input InventoryStockQuanUpdateInput{
 
 type Query{
     findAllInventoryStock : [InventoryStock!]!
-    findInventoryByWarehouse(warehouseId : UUID) : InventoryStock
+    findInventoryByWarehouseId(warehouseId : UUID) : InventoryStock
 }
 
 type Mutation{

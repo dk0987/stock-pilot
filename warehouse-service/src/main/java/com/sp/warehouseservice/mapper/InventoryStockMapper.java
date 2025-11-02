@@ -1,17 +1,18 @@
 package com.sp.warehouseservice.mapper;
 
 import com.sp.warehouseservice.dto.InventoryStockResponseDTO;
+import com.sp.warehouseservice.dto.StockDetailsResponseDTO;
 import com.sp.warehouseservice.model.InventoryStock;
 import com.sp.warehouseservice.model.Warehouse;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 public class InventoryStockMapper {
-    public static InventoryStockResponseDTO toInventoryStockResponse(List<InventoryStock> inventoryStock , Warehouse warehouse ) {
+    public static InventoryStockResponseDTO toInventoryStockResponse(List<InventoryStock> inventoryStock , Warehouse warehouse , com.sp.warehouse.GetProductsResponse productDetailsResponse ) {
         InventoryStockResponseDTO inventoryStockResponseDTO = new InventoryStockResponseDTO();
-        List<UUID> inventoryDetail = new ArrayList<>();
+        List<StockDetailsResponseDTO> stockDetails = new ArrayList<>();
+        StockDetailsResponseDTO stockDetail = new StockDetailsResponseDTO();
         inventoryStockResponseDTO.setWarehouse(warehouse.getId());
         inventoryStockResponseDTO.setWarehouseName(warehouse.getName());
         inventoryStockResponseDTO.setWarehouseAddress(warehouse.getAddress());
@@ -24,9 +25,23 @@ public class InventoryStockMapper {
         inventoryStockResponseDTO.setWarehouseCreatedAt(warehouse.getCreatedAt());
         inventoryStockResponseDTO.setWarehouseCreatedBy(warehouse.getCreatedBy());
         inventoryStock.forEach(item -> {
-            inventoryDetail.add(item.getId());
+           Optional<com.sp.warehouse.ProductDetail> productDetail = productDetailsResponse
+                   .getProductsList()
+                   .stream()
+                   .filter(p-> item.getProductId().toString().equals(p.getProductId()))
+                   .findFirst();
+           stockDetail.setStockId(item.getId());
+           stockDetail.setProductQuantity(item.getQuantity());
+           if (productDetail.isPresent()) {
+               stockDetail.setProductName(productDetail.get().getProductName());
+               stockDetail.setProductDescription(productDetail.get().getProductDescription());
+               stockDetail.setProductCategory(productDetail.get().getProductCategory());
+               stockDetail.setProductId(item.getProductId());
+               stockDetail.setProductMaxOccupancy(productDetail.get().getProductMaxOccupancy());
+           }
+           stockDetails.add(stockDetail);
+           inventoryStockResponseDTO.setStockDetails(stockDetails);
         });
-        inventoryStockResponseDTO.setId(inventoryDetail);
         return inventoryStockResponseDTO;
     }
 }

@@ -18,7 +18,7 @@ public class InventoryController {
     }
 
     @QueryMapping
-    public InventoryStockResponseDTO findInventoryByWarehouse(@Argument("warehouseId") UUID warehouseId) {
+    public InventoryStockResponseDTO findInventoryByWarehouseId(@Argument("warehouseId") UUID warehouseId) {
         return inventoryStockService.getInventoryStockByWarehouseId(warehouseId);
     }
 }

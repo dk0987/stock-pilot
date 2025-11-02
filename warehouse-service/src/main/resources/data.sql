@@ -32,6 +32,13 @@ CREATE TABLE IF NOT EXISTS inventory_stock (
 --       ('33333333-3333-3333-3333-333333333333', 'West Logistics Hub', '88 West Lane', 'Nagoya', 'Aichi', '450001', 'Japan', '052-555-6666', 'west@warehouse.com', FALSE, 'cccccccc-cccc-cccc-cccc-cccccccccccc', '2023-12-15 14:30:00', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'),
 --       ('44444444-4444-4444-4444-444444444444', 'South Distribution', '44 South St', 'Fukuoka', 'Fukuoka', '810001', 'Japan', '092-777-8888', NULL, TRUE, 'dddddddd-dddd-dddd-dddd-dddddddddddd', '2024-02-20 16:00:00', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'),
 --       ('55555555-5555-5555-5555-555555555555', 'North Storage Facility', '99 North Ave', 'Sapporo', 'Hokkaido', '060001', 'Japan', '011-999-0000', 'north@warehouse.com', TRUE, 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee', '2024-11-01 11:00:00', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
--- INSERT INTO inventory_stock (id, product_id, warehouse_id, quantity, created_by, created_at) VALUES
---     ('bbbb1111-1111-1111-1111-111111111111', '11111111-2222-3333-4444-555555555511', '11111111-1111-1111-1111-111111111122', 120, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '2024-11-01 09:00:00');
-
+--
+--
+-- INSERT INTO inventory_stock (
+--     id, product_id, warehouse_id, quantity, created_by, created_at
+-- ) VALUES
+--       ('bbbb1111-1111-1111-1111-111111111111', '11111111-2222-3333-4444-555555555511', '11111111-1111-1111-1111-111111111111', 120, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '2024-11-01 09:00:00'),
+--
+--       ('bbbb2222-2222-2222-2222-222222222222', '11111111-2222-3333-4444-555555555522', '22222222-2222-2222-2222-222222222222', 60, 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', '2024-12-10 10:30:00'),
+--
+--       ('bbbb3333-3333-3333-3333-333333333333', '11111111-2222-3333-4444-555555555533', '44444444-4444-4444-4444-444444444444', 200, 'cccccccc-cccc-cccc-cccc-cccccccccccc', '2025-01-15 14:00:00');

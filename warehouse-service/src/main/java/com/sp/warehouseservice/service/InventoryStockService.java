@@ -1,6 +1,7 @@
 package com.sp.warehouseservice.service;
 
 import com.sp.warehouseservice.dto.InventoryStockResponseDTO;
+import com.sp.warehouseservice.grpc.ProductServiceClient;
 import com.sp.warehouseservice.mapper.InventoryStockMapper;
 import com.sp.warehouseservice.model.InventoryStock;
 import com.sp.warehouseservice.model.Warehouse;
@@ -17,14 +18,17 @@ import java.util.UUID;
 public class InventoryStockService {
     private static final Logger log = LoggerFactory.getLogger(InventoryStockService.class);
     private final InventoryStockRepository inventoryStockRepository;
-    private final WarehouseRepository warehouseRepository
+    private final WarehouseRepository warehouseRepository;
+    private final ProductServiceClient productServiceClient;
             ;
     public InventoryStockService(
             InventoryStockRepository inventoryStockRepository ,
-            WarehouseRepository warehouseRepository
+            WarehouseRepository warehouseRepository ,
+            ProductServiceClient productServiceClient
     ) {
         this.inventoryStockRepository = inventoryStockRepository;
         this.warehouseRepository = warehouseRepository;
+        this.productServiceClient = productServiceClient;
     }
 
     public InventoryStockResponseDTO getInventoryStockByWarehouseId(UUID warehouseId) {
@@ -40,8 +44,12 @@ public class InventoryStockService {
                 List<InventoryStock> inventoryAccordingWarehouse = inventoryStockRepository.getByWarehouseId(warehouseId);
                 Warehouse warehouseDetail = warehouseRepository.findById(warehouseId)
                         .orElseThrow(() -> new RuntimeException("warehouse not found"));
+                com.sp.warehouse.GetProductsResponse productDetails = productServiceClient.getProductDetailsResponse(
+                        inventoryAccordingWarehouse.stream()
+                                .map(i-> i.getProductId().toString())
+                                .toList());
                 InventoryStockResponseDTO inventoryStockResponseDTO ;
-                inventoryStockResponseDTO = InventoryStockMapper.toInventoryStockResponse(inventoryAccordingWarehouse , warehouseDetail);
+                inventoryStockResponseDTO = InventoryStockMapper.toInventoryStockResponse(inventoryAccordingWarehouse , warehouseDetail , productDetails);
                 return inventoryStockResponseDTO;
             }
         } catch (RuntimeException e){

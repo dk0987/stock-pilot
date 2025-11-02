@@ -4,6 +4,9 @@ import com.sp.productservice.dto.ProductRequestDTO;
 import com.sp.productservice.dto.ProductResponseDTO;
 import com.sp.productservice.model.Product;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductMapper {
 
     public static Product toProduct(ProductRequestDTO productRequestDTO) {
@@ -27,4 +30,5 @@ public class ProductMapper {
         productResponseDTO.setCreatedBy(product.getCreatedBy());
         return productResponseDTO;
     }
+
 }

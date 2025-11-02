@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class InventoryStockResponseDTO {
-    public List<UUID> id ;
     public UUID warehouse;
     public String warehouseName ;
     public String warehouseAddress ;
@@ -17,13 +16,22 @@ public class InventoryStockResponseDTO {
     public String warehouseEmail   ;
     public UUID warehouseCreatedBy ;
     public LocalDateTime warehouseCreatedAt ;
+    public List<StockDetailsResponseDTO> stockDetails ;
 
-    public List<UUID> getId() {
-        return id;
+    public List<StockDetailsResponseDTO> getStockDetails() {
+        return stockDetails;
     }
 
-    public void setId(List<UUID> id) {
-        this.id = id;
+    public void setStockDetails(List<StockDetailsResponseDTO> stockDetails) {
+        this.stockDetails = stockDetails;
+    }
+
+    public String getWarehouseEmail() {
+        return warehouseEmail;
+    }
+
+    public void setWarehouseEmail(String warehouseEmail) {
+        this.warehouseEmail = warehouseEmail;
     }
 
     public UUID getWarehouse() {
