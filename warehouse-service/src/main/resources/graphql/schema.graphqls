@@ -1,5 +1,7 @@
 scalar UUID
 scalar DateTime
+
+#Inventory Detail Schemas
 type StockDetails{
     stockId : UUID!
     productId : UUID!
@@ -33,14 +35,14 @@ input InventoryStockCreateInput{
 }
 
 input InventoryStockUpdateInput{
-   id : UUID!
-   quantity : UUID!
+   id        : UUID!
+   quantity  : UUID!
    warehouse : UUID!
    product   : UUID!
 }
 
 input InventoryStockQuanUpdateInput{
-    id : UUID!
+    id       : UUID!
     quantity : Int
 }
 
@@ -54,3 +56,57 @@ type Mutation{
     updateInventoryStock(input : InventoryStockUpdateInput) : InventoryStock!
     updateInventoryStockQuantity(input : InventoryStockQuanUpdateInput) : InventoryStock!
 }
+
+# Warehouse Detail Schema
+type Warehouse{
+    warehouseId       : UUID!
+    warehouseName     : String!
+    warehouseAddress  : String!
+    warehouseCity     : String
+    warehouseState    : String
+    warehouseZip      : String!
+    warehouseCountry  : String!
+    warehousePhone    : String!
+    warehouseEmail    : String
+    warehouseIsActive : Boolean
+    managedBy         : UUID
+    createdBy         : UUID
+    createdAt         : DateTime
+}
+
+input WarehouseCreateInput{
+    warehouseName     : String!
+    warehouseAddress  : String!
+    warehouseCity     : String
+    warehouseState    : String
+    warehouseZip      : String!
+    warehouseCountry  : String!
+    warehousePhone    : String!
+    warehouseEmail    : String
+    managedBy         : UUID
+}
+
+input WarehouseUpdateInput{
+    warehouseId       : UUID!
+    warehouseName     : String
+    warehouseAddress  : String
+    warehouseCity     : String
+    warehouseState    : String
+    warehouseZip      : String
+    warehouseCountry  : String
+    warehousePhone    : String
+    warehouseEmail    : String
+    managedBy         : UUID
+}
+
+extend type Query {
+    findAllWarehouses : [Warehouse]
+    findWarehouseById(warehouseId : UUID) : Warehouse
+}
+
+extend type Mutation {
+    warehouseCreate(input       : WarehouseCreateInput) : Warehouse
+    warehouseUpdate(input       : WarehouseUpdateInput) : Warehouse
+    warehouseDelete(warehouseId : UUID!) : Warehouse
+}
+

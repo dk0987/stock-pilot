@@ -1,9 +1,14 @@
 package com.sp.warehouseservice.mapper;
 
+import com.google.type.DateTime;
 import com.sp.warehouseservice.dto.InventoryStockResponseDTO;
 import com.sp.warehouseservice.dto.StockDetailsResponseDTO;
 import com.sp.warehouseservice.model.InventoryStock;
 import com.sp.warehouseservice.model.Warehouse;
+
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +27,7 @@ public class InventoryStockMapper {
         inventoryStockResponseDTO.setWarehouseCountry(warehouse.getCountry());
         inventoryStockResponseDTO.setWarehouseStates(warehouse.getState());
         inventoryStockResponseDTO.setWarehousEmail(warehouse.getEmail());
-        inventoryStockResponseDTO.setWarehouseCreatedAt(warehouse.getCreatedAt());
+        inventoryStockResponseDTO.setWarehouseCreatedAt(warehouse.getCreatedAt().atOffset(ZoneOffset.UTC));
         inventoryStockResponseDTO.setWarehouseCreatedBy(warehouse.getCreatedBy());
         inventoryStock.forEach(item -> {
            Optional<com.sp.warehouse.ProductDetail> productDetail = productDetailsResponse

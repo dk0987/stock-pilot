@@ -3,6 +3,9 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.sp.warehouse.GetProductsResponse;
+import com.sp.warehouse.GetProductsRequest;
+import com.sp.warehouse.ProductServiceGrpc;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +22,14 @@ public class ProductServiceClient {
     ) {
         log.info("init ProductServiceClient");
         ManagedChannel channel = ManagedChannelBuilder.forAddress(serverAddress, serverPort).usePlaintext().build();
-        blockingStub = com.sp.warehouse.ProductServiceGrpc.newBlockingStub(channel);
+        blockingStub = ProductServiceGrpc.newBlockingStub(channel);
     }
 
     public com.sp.warehouse.GetProductsResponse getProductDetailsResponse(List<String> productIds){
-        log.info("Method called");
-        com.sp.warehouse.GetProductsRequest request = com.sp.warehouse.GetProductsRequest.newBuilder()
+        GetProductsRequest request = com.sp.warehouse.GetProductsRequest.newBuilder()
                 .addAllProductIds(productIds)
                 .build();
-        log.info("Method called2{}",request);
-        com.sp.warehouse.GetProductsResponse response = blockingStub.getProducts(request);
+        GetProductsResponse response = blockingStub.getProducts(request);
         log.info("Fetched all product details for productIds {}", response);
         return response;
     }

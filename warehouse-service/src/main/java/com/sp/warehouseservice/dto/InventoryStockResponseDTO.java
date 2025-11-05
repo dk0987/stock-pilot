@@ -1,6 +1,7 @@
 package com.sp.warehouseservice.dto;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ public class InventoryStockResponseDTO {
     public String warehousePhone   ;
     public String warehouseEmail   ;
     public UUID warehouseCreatedBy ;
-    public LocalDateTime warehouseCreatedAt ;
+    public OffsetDateTime warehouseCreatedAt ;
     public List<StockDetailsResponseDTO> stockDetails ;
 
     public List<StockDetailsResponseDTO> getStockDetails() {
@@ -114,11 +115,11 @@ public class InventoryStockResponseDTO {
         this.warehouseCreatedBy = warehouseCreatedBy;
     }
 
-    public LocalDateTime getWarehouseCreatedAt() {
+    public OffsetDateTime getWarehouseCreatedAt() {
         return warehouseCreatedAt;
     }
 
-    public void setWarehouseCreatedAt(LocalDateTime warehouseCreatedAt) {
+    public void setWarehouseCreatedAt(OffsetDateTime warehouseCreatedAt) {
         this.warehouseCreatedAt = warehouseCreatedAt;
     }
 
