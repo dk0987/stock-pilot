@@ -6,6 +6,7 @@ option java_package = "com.sp.warehouse";
 service ProductService {
   // Request product details for multiple product UUIDs
   rpc GetProducts (GetProductsRequest) returns (GetProductsResponse);
+  rpc GetProductExist(ExistProductIdRequest) returns (ExistProductIdResponse);
 }
 
 // Request contains a list of product UUIDs
@@ -25,4 +26,14 @@ message ProductDetail {
   string productDescription = 3;
   string productCategory = 4;
   int32  productMaxOccupancy = 5;
+}
+
+//Product ID exists Request
+message ExistProductIdRequest{
+  string productID = 1;
+}
+
+// Product ID exists Response
+message ExistProductIdResponse{
+  bool exists = 1;
 }
