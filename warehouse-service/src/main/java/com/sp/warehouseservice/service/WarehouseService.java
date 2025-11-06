@@ -2,6 +2,7 @@ package com.sp.warehouseservice.service;
 
 import com.sp.warehouseservice.dto.WarehouseRequestDTO;
 import com.sp.warehouseservice.dto.WarehouseResponseDTO;
+import com.sp.warehouseservice.grpc.UserServiceClient;
 import com.sp.warehouseservice.mapper.WarehouseMapper;
 import com.sp.warehouseservice.model.Warehouse;
 import com.sp.warehouseservice.repository.WarehouseRepository;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,9 +19,11 @@ public class WarehouseService {
 
     private static final Logger log = LoggerFactory.getLogger(WarehouseService.class);
     private final WarehouseRepository warehouseRepository;
+    private final UserServiceClient userServiceClient;
 
-    public WarehouseService(WarehouseRepository warehouseRepository) {
+    public WarehouseService(WarehouseRepository warehouseRepository , UserServiceClient userServiceClient) {
         this.warehouseRepository = warehouseRepository;
+        this.userServiceClient = userServiceClient;
     }
 
     public List<WarehouseResponseDTO> getAllWarehouses(){
@@ -49,12 +53,21 @@ public class WarehouseService {
         }
     }
 
-    public Warehouse createWarehouse(WarehouseRequestDTO warehouseRequest){
+    public WarehouseResponseDTO createWarehouse(WarehouseRequestDTO warehouseRequest){
         try{
             if (warehouseRequest == null){
                 throw new RuntimeException("warehouse create request is null");
             }
-            return warehouseRepository.save(WarehouseMapper.toWarehouse(warehouseRequest));
+            if (!userServiceClient.checkUserExist(warehouseRequest.getManagedBy().toString())){
+                throw new RuntimeException("User id for managed by not exist");
+            }
+
+            Warehouse warehouse = WarehouseMapper.toWarehouse(warehouseRequest);
+            warehouse.setCreatedAt(LocalDateTime.now());
+            warehouse.setCreatedBy(UUID.fromString("a0e9b8c7-d6f5-e4d3-c2b1-100000000008"));
+            warehouse.setActive(true);
+            Warehouse createdWarehouse = warehouseRepository.save(warehouse);
+            return WarehouseMapper.toWarehouseResponseDTO(createdWarehouse);
         } catch (RuntimeException e) {
             log.info("Something went wrong when trying to create warehouse by request.");
             throw new RuntimeException(e.getMessage());
@@ -82,14 +95,14 @@ public class WarehouseService {
             UUID   managedBy        = warehouseRequestDTO.getManagedBy();
 
             warehouse.setName(   !warehouseName.isBlank()        ? warehouseName    : warehouse.getName());
-            warehouse.setAddress(!warehouseAddress.isBlank()     ? warehouseAddress : warehouse.getAddress());
-            warehouse.setCity(   !warehouseCity.isBlank()        ? warehouseCity    : warehouse.getCity());
-            warehouse.setState(  !warehouseState.isBlank()       ? warehouseState   : warehouse.getState());
-            warehouse.setZip(    !warehouseZip.isBlank()         ? warehouseZip     : warehouse.getZip());
-            warehouse.setCountry(!warehouseCountry.isBlank()     ? warehouseCountry : warehouse.getCountry());
-            warehouse.setPhone(  !warehousePhone.isBlank()       ? warehousePhone   : warehouse.getPhone());
-            warehouse.setEmail(  !warehouseEmail.isBlank()       ? warehouseEmail   : warehouse.getEmail());
-            warehouse.setUserId( !managedBy.toString().isBlank() ? managedBy        : warehouse.getUserId());
+            warehouse.setAddress( warehouseAddress != null && !warehouseAddress.isBlank()     ? warehouseAddress : warehouse.getAddress());
+            warehouse.setCity(   warehouseCity != null &&!warehouseCity.isBlank()        ? warehouseCity    : warehouse.getCity());
+            warehouse.setState(  warehouseState != null &&!warehouseState.isBlank()       ? warehouseState   : warehouse.getState());
+            warehouse.setZip(    warehouseZip != null &&!warehouseZip.isBlank()         ? warehouseZip     : warehouse.getZip());
+            warehouse.setCountry(warehouseCountry != null &&!warehouseCountry.isBlank()     ? warehouseCountry : warehouse.getCountry());
+            warehouse.setPhone(  warehousePhone != null &&!warehousePhone.isBlank()       ? warehousePhone   : warehouse.getPhone());
+            warehouse.setEmail(  warehouseEmail != null &&!warehouseEmail.isBlank()       ? warehouseEmail   : warehouse.getEmail());
+            warehouse.setUserId( managedBy != null &&!managedBy.toString().isBlank() ? managedBy        : warehouse.getUserId());
 
             Warehouse updatedWarehouse = warehouseRepository.save(warehouse);
             return WarehouseMapper.toWarehouseResponseDTO(updatedWarehouse);
@@ -100,7 +113,7 @@ public class WarehouseService {
         }
     }
 
-    public void deleteWarehouseById(UUID warehouseId){
+    public boolean deleteWarehouseById(UUID warehouseId){
         try{
             if (warehouseId == null){
                 throw new RuntimeException("Warehouse id is null");
@@ -110,6 +123,9 @@ public class WarehouseService {
                     .orElseThrow(() -> new RuntimeException("Warehouse not found"));
 
             warehouse.setActive(false);
+
+            warehouseRepository.save(warehouse);
+            return true;
 
         } catch (RuntimeException e) {
              log.info("Something went wrong when trying to delete warehouse by request.");

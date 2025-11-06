@@ -83,7 +83,7 @@ input WarehouseCreateInput{
     warehouseCountry  : String!
     warehousePhone    : String!
     warehouseEmail    : String
-    managedBy         : UUID
+    managedBy         : UUID!
 }
 
 input WarehouseUpdateInput{
@@ -105,8 +105,8 @@ extend type Query {
 }
 
 extend type Mutation {
-    warehouseCreate(input       : WarehouseCreateInput) : Warehouse
-    warehouseUpdate(input       : WarehouseUpdateInput) : Warehouse
-    warehouseDelete(warehouseId : UUID!) : Warehouse
+    warehouseCreate(input : WarehouseCreateInput) : Warehouse
+    warehouseUpdate(input : WarehouseUpdateInput) : Warehouse
+    warehouseDelete(warehouseId : UUID!) : Boolean
 }
 

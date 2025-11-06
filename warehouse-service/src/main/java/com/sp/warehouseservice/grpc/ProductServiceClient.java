@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ProductServiceClient {
     private static final Logger log = LoggerFactory.getLogger(ProductServiceClient.class);
-    private final com.sp.warehouse.ProductServiceGrpc.ProductServiceBlockingStub blockingStub;
+    private final ProductServiceGrpc.ProductServiceBlockingStub blockingStub;
 
     public ProductServiceClient(
             @Value("${product.service.address:localhost}") String serverAddress,
@@ -25,8 +25,8 @@ public class ProductServiceClient {
         blockingStub = ProductServiceGrpc.newBlockingStub(channel);
     }
 
-    public com.sp.warehouse.GetProductsResponse getProductDetailsResponse(List<String> productIds){
-        GetProductsRequest request = com.sp.warehouse.GetProductsRequest.newBuilder()
+    public GetProductsResponse getProductDetailsResponse(List<String> productIds){
+        GetProductsRequest request = GetProductsRequest.newBuilder()
                 .addAllProductIds(productIds)
                 .build();
         GetProductsResponse response = blockingStub.getProducts(request);

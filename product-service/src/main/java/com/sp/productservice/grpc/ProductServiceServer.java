@@ -28,7 +28,7 @@ public class ProductServiceServer extends ProductServiceGrpc.ProductServiceImplB
         log.info("getProducts request received");
         List<Product> products = productService.getProductDetails(request.getProductIdsList().stream().map(UUID::fromString).toList());
         List<ProductDetail> productResponse = new ArrayList<>();
-        log.info("getProducts request received2{}",productResponse);
+        log.info("getProducts response{}",productResponse);
         products.forEach(product -> {
             ProductDetail internalProduct = ProductDetail.newBuilder()
                     .setProductId(product.getId().toString())
@@ -39,7 +39,7 @@ public class ProductServiceServer extends ProductServiceGrpc.ProductServiceImplB
                     .build();
             productResponse.add(internalProduct);
         });
-        log.info("getProducts request received{}",productResponse);
+        log.info("getProducts response push{}",productResponse);
         responseObserver.onNext(GetProductsResponse.newBuilder().addAllProducts(productResponse).build());
         responseObserver.onCompleted();
     }

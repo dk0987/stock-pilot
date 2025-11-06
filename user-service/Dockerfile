@@ -21,8 +21,8 @@ WORKDIR /app
 
 # Copy the jar from builder stage
 COPY --from=builder /app/target/user-service-0.0.1-SNAPSHOT.jar ./app.jar
-COPY --from=builder /app/target/proto-0.0.1-SNAPSHOT.jar ./app.jar
 
 EXPOSE 4000
+EXPOSE 9002
 
 ENTRYPOINT ["java","-jar","app.jar"]
