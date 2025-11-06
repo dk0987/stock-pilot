@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private UUID id;
     @Column(length = 100 , nullable = false , unique = true)
     private String name;
     @Column(length = 100)
@@ -20,7 +20,7 @@ public class Category {
     private LocalDate createDate;
     private LocalDate updateDate;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 

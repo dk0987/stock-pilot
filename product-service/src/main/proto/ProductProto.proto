@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.sp.product";
+
+service ProductService {
+  // Request product details for multiple product UUIDs
+  rpc GetProducts (GetProductsRequest) returns (GetProductsResponse);
+}
+
+// Request contains a list of product UUIDs
+message GetProductsRequest {
+  repeated string productIds = 1;  // UUIDs as strings
+}
+
+// Response contains list of products
+message GetProductsResponse {
+  repeated ProductDetail products = 1;
+}
+
+// Product message
+message ProductDetail {
+  string productId = 1;  // UUID as string
+  string productName = 2;
+  string productDescription = 3;
+  string productCategory = 4;
+  int32  productMaxOccupancy = 5;
+}

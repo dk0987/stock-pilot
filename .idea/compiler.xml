@@ -11,7 +11,6 @@
         <module name="warehouse-service" />
         <module name="customer-service" />
         <module name="sales-order-service" />
-        <module name="proto" />
         <module name="product-service" />
         <module name="user-service" />
         <module name="purchase-order-service" />
@@ -20,6 +19,9 @@
         <module name="notification-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="proto" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
