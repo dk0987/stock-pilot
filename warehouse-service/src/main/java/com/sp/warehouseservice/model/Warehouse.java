@@ -2,6 +2,7 @@ package com.sp.warehouseservice.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,6 +30,7 @@ public class Warehouse {
     private boolean isActive;
     private UUID userId ;
     private LocalDateTime createdAt;
+    private UUID createdBy;
 
     public UUID getId() {
         return id;
@@ -124,5 +126,13 @@ public class Warehouse {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public UUID getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UUID createdBy) {
+        this.createdBy = createdBy;
     }
 }

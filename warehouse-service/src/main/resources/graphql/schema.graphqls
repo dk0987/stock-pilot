@@ -1,0 +1,112 @@
+scalar UUID
+scalar DateTime
+
+#Inventory Detail Schemas
+type StockDetails{
+    stockId : UUID!
+    productId : UUID!
+    productName : String
+    productDescription : String
+    productCategory : String
+    productMaxOccupancy : Int
+    productQuantity : Int
+}
+
+type InventoryStock{
+    warehouse : UUID!
+    warehouseName    : String!
+    warehouseAddress : String
+    warehouseCity    : String
+    warehouseStates  : String
+    warehouseZip     : String!
+    warehouseCountry : String!
+    warehousePhone   : String!
+    warehouseEmail   : String
+    warehouseCreatedBy : UUID
+    warehouseCreatedAt : DateTime
+    stockDetails : [StockDetails]
+}
+
+type InventoryStockUpdateResponse{
+    inventoryStockId : UUID!
+    warehouseId      : UUID!
+    productId        : UUID!
+    quantity         : Int!
+}
+
+#Input type
+input InventoryStockCreateInput{
+    warehouse : UUID!
+    product   : UUID!
+    quantity  : Int!
+}
+
+input InventoryStockQuanUpdateInput{
+    inventoryStockId : UUID!
+    warehouseId      : UUID!
+    productId        : UUID!
+    quantity         : Int!
+}
+
+type Query{
+    findInventoryByWarehouseId(warehouseId : UUID) : InventoryStock
+}
+
+type Mutation{
+    createInventoryStock(input : InventoryStockCreateInput!) : InventoryStock!
+    updateInventoryStockQuantity(input : InventoryStockQuanUpdateInput) : InventoryStockUpdateResponse!
+}
+
+# Warehouse Detail Schema
+type Warehouse{
+    warehouseId       : UUID!
+    warehouseName     : String!
+    warehouseAddress  : String!
+    warehouseCity     : String
+    warehouseState    : String
+    warehouseZip      : String!
+    warehouseCountry  : String!
+    warehousePhone    : String!
+    warehouseEmail    : String
+    warehouseIsActive : Boolean
+    managedBy         : UUID
+    createdBy         : UUID
+    createdAt         : DateTime
+}
+
+input WarehouseCreateInput{
+    warehouseName     : String!
+    warehouseAddress  : String!
+    warehouseCity     : String
+    warehouseState    : String
+    warehouseZip      : String!
+    warehouseCountry  : String!
+    warehousePhone    : String!
+    warehouseEmail    : String
+    managedBy         : UUID!
+}
+
+input WarehouseUpdateInput{
+    warehouseId       : UUID!
+    warehouseName     : String
+    warehouseAddress  : String
+    warehouseCity     : String
+    warehouseState    : String
+    warehouseZip      : String
+    warehouseCountry  : String
+    warehousePhone    : String
+    warehouseEmail    : String
+    managedBy         : UUID
+}
+
+extend type Query {
+    findAllWarehouses : [Warehouse]
+    findWarehouseById(warehouseId : UUID) : Warehouse
+}
+
+extend type Mutation {
+    warehouseCreate(input : WarehouseCreateInput) : Warehouse
+    warehouseUpdate(input : WarehouseUpdateInput) : Warehouse
+    warehouseDelete(warehouseId : UUID!) : Boolean
+}
+
