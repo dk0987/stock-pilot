@@ -134,4 +134,11 @@ public class CustomUserService {
         }
         return UserMapper.toDTO(userRepository.findByEmail(email));
     }
+
+    public boolean getUserExistsById (UUID id) {
+        if (id == null) {
+            throw new UserNotFoundException("User with id " + id + " is null.");
+        }
+        return userRepository.existsById(id);
+    }
 }

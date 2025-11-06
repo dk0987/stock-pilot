@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "inventory-stock")
+@Table(name = "inventory_stock")
 public class InventoryStock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +17,7 @@ public class InventoryStock {
     @NotNull
     private UUID warehouseId;
     @NotNull
-    private Integer quantity;
+    private int quantity;
     private UUID createdBy;
     private LocalDateTime createdAt;
 
@@ -67,5 +67,9 @@ public class InventoryStock {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
