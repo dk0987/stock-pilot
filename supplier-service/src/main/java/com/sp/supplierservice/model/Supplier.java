@@ -26,7 +26,7 @@ public class Supplier {
     @NotNull
     private String country;
     @NotNull
-    private String zipcode;
+    private String zip;
     private String notes;
     private UUID createdBy;
     private LocalDateTime createdAt;
@@ -107,11 +107,11 @@ public class Supplier {
     }
 
     public String getZipcode() {
-        return zipcode;
+        return zip;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setZipcode(String zip) {
+        this.zip = zip;
     }
 
     public String getNotes() {

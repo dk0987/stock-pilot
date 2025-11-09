@@ -1,0 +1,59 @@
+type Supplier{
+    id : UUID
+    name : String!
+    contactPerson : String
+    address : String!
+    email : String!
+    phone : String!
+    city : String
+    state : String
+    country : String!
+    zip : String!
+    notes : String
+    createdAt : DateTime
+    createdBy : UUID
+    updatedAt : DateTime
+}
+
+type SupplierResponse{
+    status : Int
+    data : [Supplier]
+    message : String
+}
+
+input SupplierCreateRequest{
+    name : String!
+    contactPerson : String
+    address : String!
+    email : String!
+    phone : String!
+    city : String
+    state : String
+    country : String!
+    zip : String!
+    notes : String
+}
+
+input SupplierUpdateRequest{
+    name : String
+    contactPerson : String
+    address : String
+    email : String
+    phone : String
+    city : String
+    state : String
+    country : String
+    zip : String
+    notes : String
+}
+
+extend type Query {
+    getAllSuppliers : SupplierResponse
+    getSupplierById(supplierId : UUID) : SupplierResponse
+}
+
+extend type Mutation {
+    createSuppliers(input : SupplierCreateRequest) : SupplierResponse
+    updateSuppliers(input : SupplierUpdateRequest) : SupplierResponse
+    deleteSuppliers(supplierId : UUID) : SupplierResponse
+}
