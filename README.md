@@ -159,4 +159,3 @@ The architecture supports **role-based access**, **modular workflows**, and **re
 * Role-based access control
 * Clear master data relationships (Product, Supplier, Customer, Warehouse)
 
------------*******----------------
