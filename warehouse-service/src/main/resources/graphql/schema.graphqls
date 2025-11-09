@@ -27,34 +27,34 @@ type InventoryStock{
     stockDetails : [StockDetails]
 }
 
+type InventoryStockUpdateResponse{
+    inventoryStockId : UUID!
+    warehouseId      : UUID!
+    productId        : UUID!
+    quantity         : Int!
+}
+
 #Input type
 input InventoryStockCreateInput{
     warehouse : UUID!
     product   : UUID!
-    quantity  : Int
-}
-
-input InventoryStockUpdateInput{
-   id        : UUID!
-   quantity  : UUID!
-   warehouse : UUID!
-   product   : UUID!
+    quantity  : Int!
 }
 
 input InventoryStockQuanUpdateInput{
-    id       : UUID!
-    quantity : Int
+    inventoryStockId : UUID!
+    warehouseId      : UUID!
+    productId        : UUID!
+    quantity         : Int!
 }
 
 type Query{
-    findAllInventoryStock : [InventoryStock!]!
     findInventoryByWarehouseId(warehouseId : UUID) : InventoryStock
 }
 
 type Mutation{
     createInventoryStock(input : InventoryStockCreateInput!) : InventoryStock!
-    updateInventoryStock(input : InventoryStockUpdateInput) : InventoryStock!
-    updateInventoryStockQuantity(input : InventoryStockQuanUpdateInput) : InventoryStock!
+    updateInventoryStockQuantity(input : InventoryStockQuanUpdateInput) : InventoryStockUpdateResponse!
 }
 
 # Warehouse Detail Schema
