@@ -10,125 +10,153 @@ Built on Spring Boot and leveraging GraphQL for flexible API communication, Stoc
 <img width="2564" height="1325" alt="image" src="https://github.com/user-attachments/assets/501c6e3d-b6cd-46af-b68a-faa92a717b56" />
 
 
+## 📘 Overview
 
-✨ Core Features
+This system manages the complete workflow from **user authentication** to **inventory updates** after **purchases** and **sales**.
+It enables users to create and manage **products**, **warehouses**, **suppliers**, **purchase orders**, and **customers**, ensuring all approvals and stock movements are automated and traceable.
 
-Stock-Pilot is engineered to maximize efficiency and intelligence across your entire inventory workflow.
+The architecture supports **role-based access**, **modular workflows**, and **real-time inventory management**.
 
-🛡️ 1. Role-Defined User Access (RBAC)
+---
 
-Authentication & Authorization: Implements robust security protocols (e.g., OAuth2/JWT) to secure all GraphQL endpoints.
+## ⚙️ System Workflow
 
-Role-Based Access Control (RBAC): Access to critical operations is strictly controlled by defined roles:
+### 🔑 1. User Authentication
 
-ADMIN: Full system access, security configuration, and all user/role management.
+**Modules:** Authentication Service, User DB, Session Token Service
+**Flow:**
 
-INVENTORY_MANAGER: Oversight of all stock levels, managing product attributes, creating purchase orders, and reviewing deficiency alerts.
+1. User logs in using credentials.
+2. The Authentication Service validates credentials and issues a session token.
+3. The user is assigned a role (Admin, Purchase Admin, Sales Admin, or Viewer).
 
-SALES_MANAGER: Access to sales history, current stock views, forecasting data, and sales-related reports.
+---
 
-APPROVAL: Dedicated authority for approving stock adjustments, large purchase orders, and major inter-warehouse transfers.
+### 📦 2. Master Data Management
 
-USER: Basic read access, viewing stock levels, and executing assigned transactions (e.g., scanning items).
+#### 🛍️ a. Product Management
 
-Dedicated Services: Services are implemented to manage users and ensure all data access respects the defined role permissions.
+* Add product details: name, SKU, price, description, etc.
+* Store data in **Product DB**.
+* Link each product to warehouse inventory for tracking.
 
-📦 2. Comprehensive Inventory & Warehouse Management
+#### 🏭 b. Warehouse Management
 
-Unified Data Model: Manages Products, Warehouses, Authors, and Books (as placeholder entities), all connected via UUID for global uniqueness.
+* Register new warehouses with location and capacity details.
+* Data stored in **Warehouse DB**.
+* Each warehouse connects to the inventory system.
 
-Custom Product Attributes: GraphQL mutations support the dynamic addition of custom key-value pairs to product entities, allowing for enhanced, future-proof categorization (e.g., hazardous_level, shelf_life_days).
+#### 🧾 c. Supplier Management
 
-Warehouse CRUD: Full capabilities for creating, reading, updating, and deleting warehouse records.
+* Create and validate supplier details (name, contact, address).
+* Store data in **Supplier DB**.
+* Used when creating purchase orders.
 
-📈 3. Warehouse Analytics Service & Live Dashboard Support
+#### 👥 d. Customer Management
 
-Summary Endpoints: Dedicated GraphQL queries are optimized to fetch aggregate data points necessary for the live dashboard.
+* Add customer records (name, contact, address).
+* Data stored in **Customer DB** for future sales transactions.
 
-Examples: Total Stock Value, Inventory Turnover Rate (ITR), Top 10 Most/Least Moved SKUs.
+---
 
-Real-Time Data Feeds: Utilizes Spring's reactive capabilities (or WebSockets via the GraphQL subscription specification) to push summarized inventory changes to the live dashboard, minimizing polling overhead.
+### 🧾 3. Purchase Order Workflow
 
-Data Aggregation: The Service layer performs complex joins and calculations to provide actionable data, not just raw transactional records.
+#### 🛒 a. Create Purchase Order
 
-🧠 4. Machine Learning for Stock Deficiency Prediction
+* User selects a supplier and adds products with quantities.
+* System validates and saves the data in **Purchase Order DB** (status: *Pending Approval*).
 
-Predictive Service: Integrates with an internal ML model (e.g., a dedicated Python/TensorFlow service communicating via REST or gRPC).
+#### 🧑‍💼 b. Purchase Approval
 
-Data Ingestion: The service feeds historical inventory, sales, seasonality, and lead-time data to the ML model.
+* Purchase Approval Process reviews and approves or rejects the order.
+* Once approved:
 
-Deficiency Alerts: Provides dedicated GraphQL queries to retrieve predicted stock deficiencies or overstock warnings, enabling proactive ordering and logistical planning.
+  * PO status changes to *Approved*.
+  * Inventory is updated (stock increased).
+  * Action logged in **Audit Logging Service**.
+  * Notification sent to user.
 
-ML Metrics: Tracks and exposes model performance metrics (accuracy, precision) for administrative review.
+#### 📈 c. Inventory Update
 
-🛠 Technology Stack
+* Approved POs trigger the **Inventory Service** to update product quantities.
+* All actions are recorded for reporting and traceability.
 
-Component
+---
 
-Technology
+### 💰 4. Sales Workflow
 
-Role
+#### 🧾 a. Create Sales Request
 
-Framework
+* User creates a new sales request by selecting a customer and available products.
+* Data saved in **Sales Request DB** (status: *Pending Approval*).
 
-Spring Boot 3.x
+#### ✅ b. Sales Approval
 
-Application foundation and REST/HTTP handling.
+* Sales Admin reviews and approves the request.
+* Upon approval:
 
-API
+  * Sales status changes to *Approved*.
+  * Stock is **deducted** from inventory.
+  * Action logged and notifications sent.
 
-Spring for GraphQL
+---
 
-Flexible, strongly-typed API layer.
+### 📊 5. Reporting & Analytics
 
-Database
+* The **Reporting Module** generates analytics for:
 
-Spring Data JPA / Hibernate
+  * Stock shortages
+  * Supplier performance
+  * Purchase and sales summaries
+* Helps management monitor operations and optimize resources.
 
-ORM and persistence layer.
+---
 
-Data Store
+## 🧩 Key Entities
 
-H2 (in-memory dev) / PostgreSQL (prod)
+| Entity             | Description                            |
+| ------------------ | -------------------------------------- |
+| **User**           | System users with defined roles        |
+| **Product**        | Items available for purchase or sale   |
+| **Warehouse**      | Physical storage locations             |
+| **Supplier**       | Vendor providing products              |
+| **Purchase Order** | Document for product acquisition       |
+| **Customer**       | Buyer receiving products               |
+| **Sales Request**  | Customer sales order awaiting approval |
+| **Inventory**      | Real-time stock tracking system        |
 
-Transactional data storage.
+---
 
-Data Types
+## 🔐 Roles & Permissions
 
-Custom Scalars (UUID, DateTime)
+| Role               | Permissions                        |
+| ------------------ | ---------------------------------- |
+| **Admin**          | Full access to all modules         |
+| **Purchase Admin** | Manage suppliers & purchase orders |
+| **Sales Admin**    | Manage customers & sales requests  |
+| **Viewer**         | Read-only access to reports        |
 
-Handles complex types natively across the GraphQL boundary.
+---
 
-Build Tool
+## 🧠 Core Services
 
-Maven (pom.xml)
+| Service                    | Responsibility                        |
+| -------------------------- | ------------------------------------- |
+| **Authentication Service** | Manages user login and token issuance |
+| **Approval Services**      | Handles purchase and sales approvals  |
+| **Inventory Service**      | Updates and tracks stock quantities   |
+| **Notification Service**   | Sends system alerts and updates       |
+| **Audit Logging**          | Records all critical system actions   |
 
-Dependency management and build lifecycle.
+---
 
-🏁 Getting Started
+## 💡 Key Features
 
-Prerequisites
+* Modular, scalable architecture
+* Automated approval workflows
+* Real-time inventory synchronization
+* Complete audit and logging system
+* Role-based access control
+* Clear master data relationships (Product, Supplier, Customer, Warehouse)
 
-Java 17+
-
-Maven 3.6+
-
-Building the Project
-
-# Clone the repository
-git clone [https://github.com/dk0987/stock-pilot/](https://github.com/dk0987/stock-pilot/)
-cd stock-pilot
-
-# Build the project
-./mvnw clean package
-
-
-Running the Application
-
-The application uses an in-memory H2 database for development and loads sample data on startup (see DataLoaderConfig.java).
-
-# Run the application
-java -jar target/stock-pilot-0.0.1-SNAPSHOT.jar
-
-
-The service will start on http://localhost:4000.
+-----------*******----------------
