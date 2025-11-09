@@ -1,6 +1,6 @@
 
 
-🚀 Stock-Pilot Backend Service
+## 🚀 Stock-Pilot Backend Service
 
 
 <img width="2564" height="1325" alt="image" src="https://github.com/user-attachments/assets/501c6e3d-b6cd-46af-b68a-faa92a717b56" />
