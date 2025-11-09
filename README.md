@@ -7,8 +7,8 @@ Overview
 Welcome to the backend repository for Stock-Pilot, an Advanced Inventory Management System. This service is designed to be the robust and intelligent core of the application, providing not just transactional integrity but also predictive analytics to optimize inventory operations.
 
 Built on Spring Boot and leveraging GraphQL for flexible API communication, Stock-Pilot adheres to a clean Resolver (Controller) -> Service -> Repository (JPA) architecture.
+<img width="2564" height="1325" alt="image" src="https://github.com/user-attachments/assets/8f058b2b-01ff-47b6-953d-a2ea88b8162b" />
 
-<img width="9284" height="3186" alt="image" src="https://github.com/user-attachments/assets/80894b6f-a2b6-4844-a701-12cf1262d377" />
 
 ✨ Core Features
 
