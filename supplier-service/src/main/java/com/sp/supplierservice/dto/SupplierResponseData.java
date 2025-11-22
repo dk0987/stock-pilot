@@ -1,38 +1,25 @@
-package com.sp.supplierservice.model;
+package com.sp.supplierservice.dto;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "supplier")
-public class Supplier {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class SupplierResponseData {
     private UUID id ;
-    @NotNull
     private String name ;
-    private String contactPerson;
-    @NotNull
-    private String address;
-    private String email;
-    @NotNull
-    private String phone;
-    private String city;
-    private String state;
-    @NotNull
-    private String country;
-    @NotNull
-    private String zip;
-    private String notes;
-    private UUID createdBy;
-    private LocalDateTime createdAt;
-    private UUID updatedBy;
-    private LocalDateTime updatedAt;
-    private Boolean isActive;
+    private String contactPerson ;
+    private String address ;
+    private String email ;
+    private String phone ;
+    private String city ;
+    private String state ;
+    private String country ;
+    private String zip ;
+    private String notes ;
+    private OffsetDateTime createdAt ;
+    private UUID createdBy ;
+    private OffsetDateTime updatedAt ;
+
+
 
     public UUID getId() {
         return id;
@@ -106,11 +93,11 @@ public class Supplier {
         this.country = country;
     }
 
-    public String getZipcode() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZipcode(String zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
@@ -122,6 +109,14 @@ public class Supplier {
         this.notes = notes;
     }
 
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public UUID getCreatedBy() {
         return createdBy;
     }
@@ -130,35 +125,11 @@ public class Supplier {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public UUID getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(UUID updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public LocalDateTime getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
     }
 }
