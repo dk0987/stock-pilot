@@ -1,8 +1,8 @@
 package com.sp.userservice.controller;
 
-import com.sp.userservice.dto.UserRequestDTO;
-import com.sp.userservice.dto.UserResponseDTO;
-import com.sp.userservice.dto.validators.CreateUserValidationGroup;
+import com.sp.userservice.dto.UsersRequestDTO;
+import com.sp.userservice.dto.UsersResponseDTO;
+import com.sp.userservice.dto.validators.CreateUsersValidationGroup;
 import com.sp.userservice.service.CustomUserService;
 import jakarta.validation.groups.Default;
 import org.springframework.http.ResponseEntity;
@@ -22,22 +22,22 @@ public class CustomUserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> getUsers(){
-        List<UserResponseDTO> usersResponse = userService.getUsers();
+    public ResponseEntity<List<UsersResponseDTO>> getUsers(){
+        List<UsersResponseDTO> usersResponse = userService.getUsers();
         return ResponseEntity.ok().body(usersResponse);
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(
-            @Validated({Default.class , CreateUserValidationGroup.class}) @RequestBody UserRequestDTO userRequestDTO
+    public ResponseEntity<UsersResponseDTO> createUser(
+            @Validated({Default.class , CreateUsersValidationGroup.class}) @RequestBody UsersRequestDTO usersRequestDTO
     ) {
-        return ResponseEntity.ok().body(userService.createUser(userRequestDTO));
+        return ResponseEntity.ok().body(userService.createUser(usersRequestDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(
+    public ResponseEntity<UsersResponseDTO> updateUser(
             @PathVariable UUID id,
-            @Validated(Default.class) @RequestBody UserRequestDTO userUpdateRequestDTO
+            @Validated(Default.class) @RequestBody UsersRequestDTO userUpdateRequestDTO
     ) {
         return ResponseEntity.ok().body(userService.updateUser(userUpdateRequestDTO , id));
     }
@@ -48,7 +48,7 @@ public class CustomUserController {
     }
 
     @GetMapping("/log-in")
-    public ResponseEntity<UserResponseDTO> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<UsersResponseDTO> login(@RequestParam String email, @RequestParam String password) {
         return ResponseEntity.ok().body(userService.login(email, password));
     }
 }
