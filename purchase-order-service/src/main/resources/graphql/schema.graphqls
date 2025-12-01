@@ -1,0 +1,22 @@
+
+type PurchaseOrderItem{
+    purchaseOrderItemId : UUID
+    productId           : UUID
+    orderQuantity       : Int
+
+}
+
+type PurchaseOrder{
+    purchaseOrderID : UUID!
+    supplierId      : UUID!
+    warehouseId     : UUID!
+    orderDate       : DateTime!
+    expectedDelDate : DateTime!
+    totalAmount     : Float!
+    status          : String
+    cratedBy        : String
+    approvedBy      : String
+    approvedDate    : DateTime
+    rejectionReason : String
+    notes           : String
+}

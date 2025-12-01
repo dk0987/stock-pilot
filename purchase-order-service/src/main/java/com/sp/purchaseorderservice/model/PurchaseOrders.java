@@ -27,6 +27,4 @@ public class PurchaseOrders {
     private LocalDateTime approvedDate;
     private String rejectionReason;
     private String notes;
-    private LocalDateTime createdDate;
-    private LocalDateTime updatedDate;
 }
