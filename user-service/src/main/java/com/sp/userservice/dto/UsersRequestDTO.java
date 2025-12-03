@@ -1,95 +1,40 @@
 package com.sp.userservice.dto;
 
-import com.sp.userservice.dto.validators.CreateUserValidationGroup;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import java.util.Set;
 
-public class UserRequestDTO {
-    @NotBlank(groups = CreateUserValidationGroup.class, message = "Username is mandatory field")
-    @Size(max = 100 , min = 5 , message = "Username should be between 5 to 100 characters")
-    private String username;
+@Data
+public class UsersRequestDTO {
 
-    @NotBlank(groups = CreateUserValidationGroup.class,message = "First name is mandatory field")
-    @Size(max = 100 , message = "Username can't exceed more than 100")
-    private String first_name;
-    private String last_name;
+    @NotBlank(message = "Username is mandatory")
+    @Size(min = 5, max = 100, message = "Username must be between 5 and 100 chars")
+    private String userName;
 
-    @NotBlank(groups = CreateUserValidationGroup.class,message = "Password is mandatory field")
-    @Size(min = 8 , message = "Password Should be more than 8 digit")
+    @NotBlank(message = "First name is mandatory")
+    @Size(max = 100, message = "First name can't exceed 100 chars")
+    private String firstName;
+
+    private String lastName;
+
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 8, message = "Password should be at least 8 characters")
     private String password;
 
-    @NotBlank(groups = CreateUserValidationGroup.class,message = "Re Password is mandatory field")
-    private String re_password;
+    @NotBlank(message = "Re-enter password")
+    private String rePassword;
 
-    @NotBlank(groups = CreateUserValidationGroup.class,message = "Email is mandatory field")
+    @NotBlank(message = "Email is mandatory")
     @Email(message = "Valid email is required")
     private String email;
 
-    private String phone_number;
-    private int role;
+    private String phoneNumber;
 
-    public String getUsername() {
-        return username;
-    }
+    @NotEmpty(message = "At least one authority must be assigned")
+    private Set<Long> authorityIds;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRe_password() {
-        return re_password;
-    }
-
-    public void setRe_password(String re_password) {
-        this.re_password = re_password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone_number() {
-        return phone_number;
-    }
-
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
+    private Boolean isActive;
 }

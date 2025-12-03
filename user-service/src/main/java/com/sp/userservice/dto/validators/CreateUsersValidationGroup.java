@@ -1,3 +1,3 @@
 package com.sp.userservice.dto.validators;
 
-public interface CreateUserValidationGroup { }
+public interface CreateUsersValidationGroup { }

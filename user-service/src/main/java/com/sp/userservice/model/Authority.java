@@ -1,29 +1,32 @@
 package com.sp.userservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
-@Setter
-@Getter
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
-@Table(name = "Authorization")
-public class Authorization {
+@Table(name = "authority")
+public class Authority extends BaseAudit {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(unique = true, nullable = false)
     private String name;
+
     private String description;
 
-    // Default Fields
-    private boolean isActive;
-    private Long createdAt;
-    private Long createdBy;
-    private Long updatedAt;
-    private Long updatedBy;
+    @Column(nullable = false)
+    private boolean isActive = true;
+
+    @ManyToMany(mappedBy = "authorities")
+    @JsonIgnore
+    private Set<Users> users = new HashSet<>();
 }

@@ -1,6 +1,6 @@
 package com.sp.userservice.grpc;
 
-import com.sp.userservice.service.CustomUserService;
+import com.sp.userservice.service.UsersService;
 import com.sp.warehouse.ExistsUserIdRequest;
 import com.sp.warehouse.ExistsUserIdResponse;
 import com.sp.warehouse.UserServiceGrpc;
@@ -15,9 +15,9 @@ import java.util.UUID;
 public class UserServiceServer extends UserServiceGrpc.UserServiceImplBase {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceServer.class);
-    private final CustomUserService userService;
+    private final UsersService userService;
 
-    public UserServiceServer(CustomUserService userService) {
+    public UserServiceServer(UsersService userService) {
         this.userService = userService;
     }
 

@@ -3,12 +3,12 @@
 ## 🚀 Stock-Pilot Backend Service
 
 
-<img width="2564" height="1325" alt="image" src="https://github.com/user-attachments/assets/501c6e3d-b6cd-46af-b68a-faa92a717b56" />
+<img width="2564" height="1325" alt="image" src="https://github.com/users-attachments/assets/501c6e3d-b6cd-46af-b68a-faa92a717b56" />
 
 
 ## 📘 Overview
 
-This system manages the complete workflow from **user authentication** to **inventory updates** after **purchases** and **sales**.
+This system manages the complete workflow from **users authentication** to **inventory updates** after **purchases** and **sales**.
 It enables users to create and manage **products**, **warehouses**, **suppliers**, **purchase orders**, and **customers**, ensuring all approvals and stock movements are automated and traceable.
 
 The architecture supports **role-based access**, **modular workflows**, and **real-time inventory management**.
@@ -24,7 +24,7 @@ The architecture supports **role-based access**, **modular workflows**, and **re
 
 1. User logs in using credentials.
 2. The Authentication Service validates credentials and issues a session token.
-3. The user is assigned a role (Admin, Purchase Admin, Sales Admin, or Viewer).
+3. The users is assigned a role (Admin, Purchase Admin, Sales Admin, or Viewer).
 
 ---
 
@@ -70,7 +70,7 @@ The architecture supports **role-based access**, **modular workflows**, and **re
   * PO status changes to *Approved*.
   * Inventory is updated (stock increased).
   * Action logged in **Audit Logging Service**.
-  * Notification sent to user.
+  * Notification sent to users.
 
 #### 📈 c. Inventory Update
 
@@ -138,7 +138,7 @@ The architecture supports **role-based access**, **modular workflows**, and **re
 
 | Service                    | Responsibility                        |
 | -------------------------- | ------------------------------------- |
-| **Authentication Service** | Manages user login and token issuance |
+| **Authentication Service** | Manages users login and token issuance |
 | **Approval Services**      | Handles purchase and sales approvals  |
 | **Inventory Service**      | Updates and tracks stock quantities   |
 | **Notification Service**   | Sends system alerts and updates       |

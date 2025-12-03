@@ -2,39 +2,41 @@ package com.sp.userservice.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
 @Table(name = "users")
-public class User {
+public class Users extends BaseAudit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true , nullable = false)
-    private String username ;
-    @Email
-    @Column(unique = true , nullable = false )
-    private String email;
-    @Column(nullable = false )
-    private String password;
-    @Column(nullable = false )
-    private String first_name;
-    private String last_name;
-    private String phone_number;
 
-    // Default Fields
-    private boolean isActive;
-    private LocalDateTime createdAt;
-    private Long createdBy;
-    private LocalDateTime updatedAt;
-    private Long updatedBy;
+    @Column(unique = true, nullable = false)
+    private String userName;
+
+    @Email
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String firstName;
+
+    private String lastName;
+    private String phoneNumber;
+    private LocalDateTime lastLogin;
+
+    @Column(nullable = false)
+    private boolean isActive = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -43,5 +45,4 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_id")
     )
     private Set<Authority> authorities = new HashSet<>();
-
 }

@@ -7,9 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CustomUserRepository extends JpaRepository<Users, UUID> {
-
+public interface UsersRepository extends JpaRepository<Users, Long> {
     boolean existsByEmail(String email);
-    Users findByEmail(String email);
+    Users   findByEmail(String email);
     boolean existsByUsername(String username);
 }
