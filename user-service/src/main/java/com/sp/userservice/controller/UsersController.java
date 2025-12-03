@@ -31,7 +31,7 @@ public class UsersController {
 
     @PatchMapping("/{id}/status")
     public ResponseEntity<Void> toggleUserStatus(@PathVariable Long id){
-        usersService.toggleUserStatus(id);
+        usersService.updateUserStatus(id);
         return ResponseEntity.noContent().build();
     }
 }

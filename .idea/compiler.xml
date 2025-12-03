@@ -8,11 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="user-service" />
-        <module name="notification-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gateway" target="17" />
       <module name="inventory-service" target="17" />
+      <module name="notification-service" target="17" />
       <module name="order-service" target="17" />
       <module name="partner-service" target="17" />
       <module name="product-service-temp" target="17" />

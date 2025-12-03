@@ -45,7 +45,7 @@ public class UsersService {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new UserAlreadyExistsException("Email already exists");
         }
-        if (userRepository.existsByUsername(request.getUserName())) {
+        if (userRepository.existsByUserName(request.getUserName())) {
             throw new UserAlreadyExistsException("Username already exists");
         }
 
@@ -88,7 +88,7 @@ public class UsersService {
 
         // Username: only if provided and different
         if (request.getUserName() != null && !request.getUserName().equals(user.getUserName())) {
-            if (userRepository.existsByUsername(request.getUserName())) {
+            if (userRepository.existsByUserName(request.getUserName())) {
                 throw new UserNameUpdateException("Username already used");
             }
             user.setUserName(request.getUserName());
