@@ -28,6 +28,7 @@ public class UsersService {
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder     passwordEncoder;
 
+
     public UsersService(UsersRepository userRepository,
                         AuthorityRepository authorityRepository,
                         PasswordEncoder passwordEncoder) {
@@ -36,7 +37,6 @@ public class UsersService {
         this.passwordEncoder     = passwordEncoder;
     }
 
-    // ------------------- CREATE ----------------------
     @Transactional
     public UsersResponseDTO createUser(UsersRequestDTO request) {
         log.info("Creating user: {}", request.getUserName());
@@ -48,20 +48,16 @@ public class UsersService {
         if (userRepository.existsByUserName(request.getUserName())) {
             throw new UserAlreadyExistsException("Username already exists");
         }
-
         if (!Objects.equals(request.getPassword(), request.getRePassword())) {
             throw new PasswordMismatchException("Passwords do not match");
         }
-
         // Authorities validation + fetch
         Set<Authority> authorities = fetchAndValidateAuthorities(request.getAuthorityIds());
-
         // Map -> entity
         Users user = UsersMapper.toUser(request, authorities);
 
         // Hash password
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-
         user.setCreatedAt(LocalDateTime.now());
         user.setActive(Boolean.TRUE);
 
@@ -70,7 +66,6 @@ public class UsersService {
         return UsersMapper.toResponse(saved);
     }
 
-    // ------------------- UPDATE ----------------------
     @Transactional
     public UsersResponseDTO updateUser(UsersRequestDTO request, Long id) {
         log.info("Updating user id: {}", id);
@@ -124,7 +119,6 @@ public class UsersService {
         return UsersMapper.toResponse(saved);
     }
 
-    // ------------------- TOGGLE STATUS ----------------------
     @Transactional
     public void updateUserStatus(Long id) {
         Users user = userRepository.findById(id)
@@ -137,14 +131,15 @@ public class UsersService {
         log.info("Toggled user active status for id: {} -> {}", id, user.isActive());
     }
 
-    // ------------------- HELPERS ----------------------
     private Set<Authority> fetchAndValidateAuthorities(Collection<Long> ids) {
+
         if (ids == null || ids.isEmpty()) {
             return Collections.emptySet();
         }
 
         // fetch from DB
         List<Authority> list = authorityRepository.findAllById(ids);
+
         if (list.size() != ids.size()) {
             // compute missing ids for better message
             Set<Long> found = list.stream().map(Authority::getId).collect(Collectors.toSet());

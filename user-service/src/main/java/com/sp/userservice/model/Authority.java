@@ -15,7 +15,7 @@ import java.util.Set;
 public class Authority extends BaseAudit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -26,7 +26,4 @@ public class Authority extends BaseAudit {
     @Column(nullable = false)
     private boolean isActive = true;
 
-    @ManyToMany(mappedBy = "authorities")
-    @JsonIgnore
-    private Set<Users> users = new HashSet<>();
 }
