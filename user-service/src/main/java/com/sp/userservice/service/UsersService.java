@@ -148,4 +148,43 @@ public class UsersService {
         }
         return new HashSet<>(list);
     }
+
+    public Users authenticateUser(String userName, String email, String password) {
+
+        if (password == null || password.isBlank()) {
+            throw new PasswordMismatchException("Password is mandatory");
+        }
+
+        if ((email == null || email.isBlank()) && (userName == null || userName.isBlank())) {
+            throw new UserEmailUpdateException("Email or Username is mandatory");
+        }
+
+        // Step 1: Find user
+        Users dbUser = null;
+
+        if (email != null && !email.isBlank()) {
+            dbUser = getUserByEmail(email)
+                    .orElseThrow(() -> new UserNotFoundException("User not found"));
+        }
+        else {
+            dbUser = getUserByUserName(userName)
+                    .orElseThrow(() -> new UserNotFoundException("User not found"));
+        }
+
+        // Step 2: Validate password
+        if (!passwordEncoder.matches(password, dbUser.getPassword())) {
+            throw new PasswordMismatchException("Incorrect password");
+        }
+
+        return dbUser;
+    }
+
+
+    private Optional<Users> getUserByEmail(String email) {
+        return Optional.ofNullable(userRepository.findByEmail(email));
+    }
+
+    private Optional<Users> getUserByUserName(String userName) {
+        return Optional.ofNullable(userRepository.findByUserName(userName));
+    }
 }
