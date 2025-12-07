@@ -1,35 +1,42 @@
 package com.sp.auth_service.controller;
 
-import com.sp.auth_service.config.JWTUtil;
 import com.sp.auth_service.dto.UserRequestDTO;
 import com.sp.auth_service.dto.UserResponseDTO;
 import com.sp.auth_service.service.AuthService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
-    private final JWTUtil jwtUtil;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
-    private ResponseEntity<UserResponseDTO> login(UserRequestDTO request) {
+    private ResponseEntity<UserResponseDTO> login(@RequestBody  UserRequestDTO request) {
         UserResponseDTO authenticatedUser = authService.getAuthenticatedUser(request);
         if  (authenticatedUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        String token = jwtUtil.generateToken(authenticatedUser);
-        authenticatedUser.setToken(token);
-
         return ResponseEntity.ok(authenticatedUser);
+
+    }
+
+    @GetMapping("/validate")
+    private ResponseEntity<String> validateToken(
+            @RequestHeader("Authorization") String authHeader
+    ) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return authService.validateToken(authHeader.substring(7))
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
     }
 }

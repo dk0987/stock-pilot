@@ -15,10 +15,11 @@ public class UserMapper {
         return userGRPCResponseDTO;
     }
 
-    public static UserResponseDTO toUserResponseDTO(UserGRPCResponseDTO user) {
+    public static UserResponseDTO toUserResponseDTO(UserGRPCResponseDTO user , String token) {
         UserResponseDTO userResponse = new UserResponseDTO();
         userResponse.setUserId(user.getUserId());
         userResponse.setAllowedAuthorities(new HashSet<>(user.getAllowedAuthorities()));
+        userResponse.setToken(token);
         return userResponse;
     }
 

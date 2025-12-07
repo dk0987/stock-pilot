@@ -26,7 +26,7 @@
      }
 
      @Override
-     public void getUserId(
+     public void getUser(
             UserGRPCRequest request,
             StreamObserver<UserGRPCResponse> responseObserver
      ) {

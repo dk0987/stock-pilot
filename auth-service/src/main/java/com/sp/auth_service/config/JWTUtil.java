@@ -4,6 +4,7 @@ import com.sp.auth_service.dto.UserGRPCResponseDTO;
 import com.sp.auth_service.dto.UserResponseDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -67,9 +68,17 @@ public class JWTUtil {
     }
 
     // Token Validation
-    public boolean validateToken(String token, UserGRPCResponseDTO userDetails) {
-        return extractUserIdFromToken(token).equals(userDetails.getUserId())
-                && extractAllowedAuthorities(token).containsAll(userDetails.getAllowedAuthorities())
-                && !isTokenExpired(token);
+    public void validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token);
+        }
+        catch (ExpiredJwtException e) {
+            throw new RuntimeException("token expired");
+        } catch (JwtException e) {
+            throw new RuntimeException("token invalid");
+        }
     }
 }

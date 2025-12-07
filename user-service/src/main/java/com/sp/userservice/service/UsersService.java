@@ -152,7 +152,7 @@ public class UsersService {
     public Users authenticateUser(String userName, String email, String password) {
 
         if (password == null || password.isBlank()) {
-            throw new PasswordMismatchException("Password is mandatory");
+            throw new PasswordMismatchException("Password is mandatory: " + password);
         }
 
         if ((email == null || email.isBlank()) && (userName == null || userName.isBlank())) {
@@ -172,10 +172,14 @@ public class UsersService {
         }
 
         // Step 2: Validate password
-        if (!passwordEncoder.matches(password, dbUser.getPassword())) {
+//        if (!passwordEncoder.matches(password, dbUser.getPassword())) {
+//            throw new PasswordMismatchException("Incorrect password");
+//        }
+
+        if (!dbUser.getPassword().equals(password)) {
             throw new PasswordMismatchException("Incorrect password");
         }
-
+        log.info("Authenticating user with email: {}", dbUser.getAuthorities());
         return dbUser;
     }
 
