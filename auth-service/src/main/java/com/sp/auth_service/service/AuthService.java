@@ -9,6 +9,9 @@ import com.sp.auth_service.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+
 @Slf4j
 @Service
 public class AuthService {
@@ -25,9 +28,6 @@ public class AuthService {
     }
 
     public UserResponseDTO getAuthenticatedUser(UserRequestDTO request) {
-         log.info("PASSWORD"+request.getPassword());
-        log.info("USERNAME"+request.getUserName());
-        log.info("Email"+request.getEmail());
 
         UserGRPCResponseDTO authenticatedUser = userServiceClient.getAuthenticatedUser(
                 request.getUserName(),
@@ -55,6 +55,14 @@ public class AuthService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Long getUserId(String token) {
+        return jwtUtil.extractUserIdFromToken(token);
+    }
+
+    public Set<Long> getAuthority(String token) {
+        return jwtUtil.extractAllowedAuthorities(token);
     }
 
 

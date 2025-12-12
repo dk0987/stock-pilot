@@ -51,7 +51,7 @@
                          .addAllAuthority(allowedAuthorities)
                          .build();
 
-         log.info("User Authenticated : {}", dbUser.getId());
+         log.info("User Authenticated : {}", dbUser.getAuthorities().size());
          responseObserver.onNext(UserGRPCResponse.newBuilder().setUser(grpcUser).build());
          responseObserver.onCompleted();
      }

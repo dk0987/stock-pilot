@@ -37,3 +37,7 @@ VALUES
     (3, 3),  -- sales_user → sales_manager
     (4, 4),  -- purchase_user → purchase_manager
     (5, 5);  -- employee_user → employee
+
+create view new_view as
+select *
+from authority.created_by;

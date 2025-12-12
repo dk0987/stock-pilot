@@ -1,0 +1,31 @@
+-- INSERT INTO authority (id, name, description, is_active, created_at, updated_at, created_by, updated_by)
+-- VALUES
+--     (1, 'system', 'Full system access', true, NOW(), NOW(), 1, 1),
+--     (2, 'inventory_manager', 'Manages inventory', true, NOW(), NOW(), 1, 1),
+--     (3, 'sales_manager', 'Manages sales operations', true, NOW(), NOW(), 1, 1),
+--     (4, 'purchase_manager', 'Manages purchase operations', true, NOW(), NOW(), 1, 1),
+--     (5, 'employee', 'Regular employee access', true, NOW(), NOW(), 1, 1);
+-- INSERT INTO users (id, user_name, email, password, first_name, last_name, phone_number, last_login, is_active, created_at, updated_at, created_by, updated_by)
+-- VALUES
+--     (1, 'system_user', 'system@example.com', 'password', 'System', 'User', '0000000001', NULL, true, NOW(), NOW(), 1, 1),
+--     (2, 'inventory_user', 'inventory@example.com', '$2a$10$TdnXzykYuAmXiKVvYzACfeXVOvVNtzMIi00Bycqbz6VOeypYOVrP2', 'Inventory', 'Manager', '0000000002', NULL, true, NOW(), NOW(), 1, 1),
+--     (3, 'sales_user', 'sales@example.com', '$2a$10$AFZ4Wv2E5u.ymLrPx9YVCOf2hqKxjmxAbxZIk8GAqzohwLyoE/OyK', 'Sales', 'Manager', '0000000003', NULL, true, NOW(), NOW(), 1, 1),
+--     (4, 'purchase_user', 'purchase@example.com', '$2a$10$h7Mvk5dQn6Xjvop3DvaF7OyEx84vUTrhrGjDKm1Dd.9RkKDkd7MLq', 'Purchase', 'Manager', '0000000004', NULL, true, NOW(), NOW(), 1, 1),
+--     (5, 'employee_user', 'employee@example.com', '$2a$10$5zVvA1HgoV6/c4ItgnNQy.Ni8juimOCsYYoDtWj2dyCgVapG81cci', 'Employee', 'User', '0000000005', NULL, true, NOW(), NOW(), 1, 1);
+-- -- system_user → system
+-- INSERT INTO users_authority (users_id, authority_id) VALUES (1, 1);
+--
+-- -- inventory_user → inventory_manager
+-- INSERT INTO users_authority (users_id, authority_id) VALUES (2, 2);
+--
+-- -- sales_user → sales_manager
+-- INSERT INTO users_authority (users_id, authority_id) VALUES (3, 3);
+--
+-- -- purchase_user → purchase_manager
+-- INSERT INTO users_authority (users_id, authority_id) VALUES (4, 4);
+--
+-- -- employee_user → employee
+-- INSERT INTO users_authority (users_id, authority_id) VALUES (5, 5);
+--
+-- -- Example: inventory_user also has employee role
+-- INSERT INTO users_authority (users_id, authority_id) VALUES (2, 5);

@@ -38,7 +38,7 @@ public class UsersService {
     }
 
     @Transactional
-    public UsersResponseDTO createUser(UsersRequestDTO request) {
+    public UsersResponseDTO createUser(UsersRequestDTO request , Long performedBy) {
         log.info("Creating user: {}", request.getUserName());
 
         // Unique checks
@@ -58,6 +58,7 @@ public class UsersService {
 
         // Hash password
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setCreatedBy(performedBy);
         user.setCreatedAt(LocalDateTime.now());
         user.setActive(Boolean.TRUE);
 
@@ -67,7 +68,7 @@ public class UsersService {
     }
 
     @Transactional
-    public UsersResponseDTO updateUser(UsersRequestDTO request, Long id) {
+    public UsersResponseDTO updateUser(UsersRequestDTO request, Long id , Long performedBy) {
         log.info("Updating user id: {}", id);
 
         Users user = userRepository.findById(id)
@@ -113,6 +114,7 @@ public class UsersService {
             user.setAuthorities(authorities);
         }
 
+        user.setUpdatedBy(performedBy);
         user.setUpdatedAt(LocalDateTime.now());
         Users saved = userRepository.save(user);
         log.info("User updated id: {}", saved.getId());
@@ -120,11 +122,12 @@ public class UsersService {
     }
 
     @Transactional
-    public void updateUserStatus(Long id) {
+    public void updateUserStatus(Long id , Long performedBy) {
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         user.setActive(!user.isActive());
+        user.setUpdatedBy(performedBy);
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
 
@@ -172,15 +175,16 @@ public class UsersService {
         }
 
         // Step 2: Validate password
-//        if (!passwordEncoder.matches(password, dbUser.getPassword())) {
-//            throw new PasswordMismatchException("Incorrect password");
-//        }
+        log.info("Stored hash  : {}", dbUser.getPassword());
+        log.info("Input raw pwd: {}", password);
 
-        if (!dbUser.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, dbUser.getPassword())) {
             throw new PasswordMismatchException("Incorrect password");
         }
-        log.info("Authenticating user with email: {}", dbUser.getAuthorities());
+
+        log.info("Authenticating user with email: {}", dbUser.getUserName());
         return dbUser;
+
     }
 
 

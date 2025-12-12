@@ -69,6 +69,9 @@ public class JWTUtil {
 
     // Token Validation
     public void validateToken(String token) {
+        if (isTokenExpired(token)) {
+            throw new RuntimeException("Token is expired");
+        }
         try {
             Jwts.parserBuilder()
                     .setSigningKey(getSigningKey())
