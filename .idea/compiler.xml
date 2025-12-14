@@ -12,7 +12,7 @@
         <module name="users-service" />
         <module name="gateway" />
       </profile>
-      <profile name="Annotation profile for common" enabled="true">
+      <profile name="Annotation profile for partners" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,6 +20,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
         <module name="common" />
+        <module name="partners" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -43,6 +44,7 @@
       <module name="notification-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="partner-service" options="-parameters" />
+      <module name="partners" options="-parameters" />
       <module name="product-service-temp" options="-parameters" />
       <module name="proto" options="-parameters" />
       <module name="user-service" options="-parameters" />
