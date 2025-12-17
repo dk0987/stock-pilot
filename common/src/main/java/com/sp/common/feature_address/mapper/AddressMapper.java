@@ -1,5 +1,7 @@
 package com.sp.common.feature_address.mapper;
 
+import com.sp.addressGrpcService.AddressGRPCRequest;
+import com.sp.addressGrpcService.AddressGRPCResponse;
 import com.sp.common.feature_address.dto.AddressRequestDTO;
 import com.sp.common.feature_address.dto.AddressResponseDTO;
 import com.sp.common.feature_address.modal.Address;
@@ -10,6 +12,19 @@ import org.springframework.stereotype.Component;
 public class AddressMapper {
 
     public static Address toAddress(AddressRequestDTO request){
+        Address address = new Address();
+        address.setCity(request.getCity());
+        address.setCountry(request.getCountry());
+        address.setStreet(request.getStreet());
+        address.setState(request.getState());
+        address.setZip(request.getZip());
+        address.setPhone(request.getPhone());
+        address.setEmail(request.getEmail());
+        return address;
+
+    }
+
+    public static Address toAddress(AddressGRPCRequest request){
         Address address = new Address();
         address.setCity(request.getCity());
         address.setCountry(request.getCountry());
@@ -36,4 +51,17 @@ public class AddressMapper {
         return responseDTO;
 
     }
+
+    public static AddressRequestDTO toAddressRequestDTO(AddressGRPCRequest request){
+        AddressRequestDTO address = new AddressRequestDTO();
+        address.setCity(request.getCity());
+        address.setCountry(request.getCountry());
+        address.setStreet(request.getStreet());
+        address.setState(request.getState());
+        address.setZip(request.getZip());
+        address.setPhone(request.getPhone());
+        address.setEmail(request.getEmail());
+        return address;
+    }
+
 }

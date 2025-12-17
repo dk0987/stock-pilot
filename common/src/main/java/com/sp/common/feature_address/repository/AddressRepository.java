@@ -9,18 +9,22 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AddressRepository extends JpaRepository<Address , Long> {
 
-    @Query("Select * from address where " +
-            "street = :street and " +
-            "city = :city and " +
-            "state = :state and " +
-            "zip = :zip and " +
-            "country = :country and " +
-            "phone = :phone and " +
-            "email = :email "
+    @Query(
+            value = """
+        SELECT * FROM address
+        WHERE street = :street
+          AND city = :city
+          AND state = :state
+          AND zip = :zip
+          AND country = :country
+          AND phone = :phone
+          AND email = :email
+    """,
+            nativeQuery = true
     )
     Address findAddressByDetails(
             @Param("street")  String street,
-            @Param("city")    String city ,
+            @Param("city")    String city,
             @Param("state")   String state,
             @Param("zip")     String zip,
             @Param("country") String country,

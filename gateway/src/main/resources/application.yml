@@ -1,11 +1,6 @@
 server:
   port: 8080
 
-grpc:
-  server:
-    port:
-      9002
-
 spring:
   cloud:
     gateway:

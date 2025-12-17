@@ -1,9 +1,14 @@
 package com.sp.partners.services;
 
+import com.sp.addressGrpcService.Address;
+import com.sp.addressGrpcService.AddressGRPCResponse;
+import com.sp.addressGrpcService.AddressServiceGrpc;
 import com.sp.partners.dto.AddressRequestDTO;
 import com.sp.partners.dto.AddressResponseDTO;
 import com.sp.partners.dto.PartnersRequestDTO;
 import com.sp.partners.dto.PartnersResponseDTO;
+import com.sp.partners.grpc.AddressServiceClient;
+import com.sp.partners.mapper.AddressMapper;
 import com.sp.partners.mapper.PartnersMapper;
 import com.sp.partners.model.Partners;
 import com.sp.partners.repository.PartnersRepository;
@@ -18,6 +23,9 @@ public class PartnersServices {
     @Autowired
     private PartnersRepository partnersRepository;
 
+    @Autowired
+    private AddressServiceClient addressServiceClient;
+
     public PartnersResponseDTO createPartner(
             PartnersRequestDTO request ,
             Long partnerType,
@@ -29,10 +37,6 @@ public class PartnersServices {
         }
 
         AddressResponseDTO createdAddress = createAddress(request.getAddress());
-
-        if (createdAddress == null){
-            throw new IllegalArgumentException("Error occurred while creating address");
-        }
 
         Partners newPartner = PartnersMapper.toPartners(request);
 
@@ -53,7 +57,11 @@ public class PartnersServices {
         }
 
         // Call GRPC to create address first
-        return null;
+        AddressGRPCResponse addressGRPCResponse = addressServiceClient
+                .createAddress(AddressMapper.toAddressGRPCRequest(request));
+
+
+        return AddressMapper.toAddressResponseDTO(addressGRPCResponse.getAddress());
 
     }
 }

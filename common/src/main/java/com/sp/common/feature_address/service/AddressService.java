@@ -1,5 +1,6 @@
 package com.sp.common.feature_address.service;
 
+import com.sp.addressGrpcService.AddressGRPCRequest;
 import com.sp.common.feature_address.dto.AddressRequestDTO;
 import com.sp.common.feature_address.dto.AddressResponseDTO;
 import com.sp.common.feature_address.mapper.AddressMapper;
@@ -18,9 +19,9 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
-    public AddressResponseDTO createAddress(AddressRequestDTO addressRequestDTO) {
+    public AddressResponseDTO createAddress(AddressGRPCRequest addressRequestDTO) {
 
-        Address alreadySavedAddress = getAddressByRequest(addressRequestDTO);
+        Address alreadySavedAddress = getAddressByRequest(AddressMapper.toAddressRequestDTO(addressRequestDTO));
 
         if (alreadySavedAddress != null) {
             return AddressMapper.toAddressResponseDTO(alreadySavedAddress);
