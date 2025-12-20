@@ -1,14 +1,12 @@
 package com.sp.partners.mapper;
 
-import com.sp.addressGrpcService.Address;
-import com.sp.addressGrpcService.AddressGRPCRequest;
 import com.sp.partners.dto.AddressRequestDTO;
 import com.sp.partners.dto.AddressResponseDTO;
 
 public class AddressMapper {
 
-    public static AddressGRPCRequest toAddressGRPCRequest(AddressRequestDTO request) {
-        return AddressGRPCRequest.newBuilder()
+    public static com.sp.partnersGrpcService.AddressGRPCRequest toAddressGRPCRequest(AddressRequestDTO request) {
+        return com.sp.partnersGrpcService.AddressGRPCRequest.newBuilder()
                 .setCity(request.getCity())
                 .setCountry(request.getCountry())
                 .setState(request.getState())
@@ -19,7 +17,7 @@ public class AddressMapper {
                 .build();
     }
 
-    public static AddressResponseDTO toAddressResponseDTO(Address address) {
+    public static AddressResponseDTO toAddressResponseDTO(com.sp.partnersGrpcService.Address address) {
        AddressResponseDTO response = new AddressResponseDTO();
        response.setId(address.getId());
        response.setCity(address.getCity());

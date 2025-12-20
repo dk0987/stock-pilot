@@ -1,8 +1,5 @@
 package com.sp.partners.services;
 
-import com.sp.addressGrpcService.Address;
-import com.sp.addressGrpcService.AddressGRPCResponse;
-import com.sp.addressGrpcService.AddressServiceGrpc;
 import com.sp.partners.dto.AddressRequestDTO;
 import com.sp.partners.dto.AddressResponseDTO;
 import com.sp.partners.dto.PartnersRequestDTO;
@@ -44,6 +41,7 @@ public class PartnersServices {
         newPartner.setAddressId(createdAddress.getId());
         newPartner.setCreatedBy(createdBy);
         newPartner.setCreatedAt(LocalDateTime.now());
+        newPartner.setActive(true);
 
         Partners createdPartner = partnersRepository.save(newPartner);
         return PartnersMapper.toPartnersResponseDTO(createdPartner , createdAddress);
@@ -57,7 +55,7 @@ public class PartnersServices {
         }
 
         // Call GRPC to create address first
-        AddressGRPCResponse addressGRPCResponse = addressServiceClient
+        com.sp.partnersGrpcService.AddressGRPCResponse addressGRPCResponse = addressServiceClient
                 .createAddress(AddressMapper.toAddressGRPCRequest(request));
 
 

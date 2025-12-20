@@ -1,15 +1,15 @@
-package com.sp.common.feature_address.grpc;
+package com.sp.common.grpc;
 
-import com.sp.addressGrpcService.Address;
-import com.sp.addressGrpcService.AddressGRPCRequest;
-import com.sp.addressGrpcService.AddressGRPCResponse;
-import com.sp.addressGrpcService.AddressServiceGrpc;
 import com.sp.common.feature_address.dto.AddressResponseDTO;
 import com.sp.common.feature_address.mapper.AddressMapper;
 import com.sp.common.feature_address.service.AddressService;
+import com.sp.commonGrpcService.Address;
+import com.sp.commonGrpcService.AddressGRPCRequest;
+import com.sp.commonGrpcService.AddressGRPCResponse;
+import com.sp.commonGrpcService.AddressServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.grpc.server.service.GrpcService;
+import net.devh.boot.grpc.server.service.GrpcService;
 
 @Slf4j
 @GrpcService
@@ -26,7 +26,7 @@ public class AddressServiceServer extends AddressServiceGrpc.AddressServiceImplB
             AddressGRPCRequest request,
             StreamObserver<AddressGRPCResponse> responseObserver
     ) {
-
+        log.info("AddressServiceServer createAddress request...");
         if (request == null){
             responseObserver.onError(new NullPointerException("request is null"));
             return;

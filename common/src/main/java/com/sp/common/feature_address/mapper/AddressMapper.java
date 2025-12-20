@@ -1,10 +1,9 @@
 package com.sp.common.feature_address.mapper;
 
-import com.sp.addressGrpcService.AddressGRPCRequest;
-import com.sp.addressGrpcService.AddressGRPCResponse;
 import com.sp.common.feature_address.dto.AddressRequestDTO;
 import com.sp.common.feature_address.dto.AddressResponseDTO;
 import com.sp.common.feature_address.modal.Address;
+import com.sp.commonGrpcService.AddressGRPCRequest;
 import jakarta.persistence.Column;
 import org.springframework.stereotype.Component;
 

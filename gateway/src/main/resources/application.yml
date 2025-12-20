@@ -25,6 +25,13 @@ spring:
             - Path=/admin/**
           filters:
             - JwtValidation
+
+        - id: partners_service
+          uri: http://partners-service:4006
+          predicates:
+              - Path=/partners/**
+          filters:
+            - JwtValidation
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

@@ -1,11 +1,11 @@
 package com.sp.common.feature_address.service;
 
-import com.sp.addressGrpcService.AddressGRPCRequest;
 import com.sp.common.feature_address.dto.AddressRequestDTO;
 import com.sp.common.feature_address.dto.AddressResponseDTO;
 import com.sp.common.feature_address.mapper.AddressMapper;
 import com.sp.common.feature_address.modal.Address;
 import com.sp.common.feature_address.repository.AddressRepository;
+import com.sp.commonGrpcService.AddressGRPCRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -22,12 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
-
-
-    @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             HeaderAuthenticationFilter authenticationFilter,
@@ -38,8 +32,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/sales/**").hasAnyRole("3" , "5")
-                        .requestMatchers("/purchase/**").hasAnyRole("4" , "5")
+                        .requestMatchers("/partners/sales/**").hasAnyRole("3" , "5")
+                        .requestMatchers("/partners/purchase/**").hasAnyRole("4" , "5")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

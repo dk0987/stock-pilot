@@ -22,7 +22,6 @@ WORKDIR /app
 # Copy the jar from builder stage
 COPY --from=builder /app/target/common-0.0.1-SNAPSHOT.jar ./app.jar
 
-EXPOSE 4005
 EXPOSE 9003
 
 ENTRYPOINT ["java","-jar","app.jar"]
