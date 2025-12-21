@@ -23,9 +23,9 @@ public class PartnersMapper {
 
         partnersResponseDTO.setId(partners.getId());
         partnersResponseDTO.setPartnerTypeId(partners.getPartnerTypeId().intValue());
-        partnersResponseDTO.setPartnerName(CommonMethods.getPartnerType(partners.getPartnerTypeId()));
+        partnersResponseDTO.setPartnerType(CommonMethods.getPartnerType(partners.getPartnerTypeId()));
 
-        partners.setPartnerName(partners.getPartnerName());
+        partnersResponseDTO.setPartnerName(partners.getPartnerName());
         partnersResponseDTO.setNotes(partners.getNotes());
         partnersResponseDTO.setCreatedAt(partners.getCreatedAt());
         partnersResponseDTO.setUpdatedAt(partners.getUpdatedAt());
@@ -33,6 +33,7 @@ public class PartnersMapper {
         partnersResponseDTO.setUpdatedBy(partners.getUpdatedBy());
 
         partnersResponseDTO.setAddress(address);
+        partnersResponseDTO.setActive(partners.isActive());
 
         return partnersResponseDTO;
 

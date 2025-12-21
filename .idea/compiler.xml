@@ -8,10 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="auth-service" />
-        <module name="user-service" />
+        <module name="product" />
         <module name="users-service" />
         <module name="common" />
         <module name="partners" />
+        <module name="user-service" />
+        <module name="warehouse" />
+        <module name="inventory" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
@@ -32,15 +35,18 @@
       <module name="auth-service" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="inventory" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="partner-service" options="-parameters" />
       <module name="partners" options="-parameters" />
+      <module name="product" options="-parameters" />
       <module name="product-service-temp" options="-parameters" />
       <module name="proto" options="-parameters" />
       <module name="user-service" options="-parameters" />
       <module name="users-service" options="-parameters" />
+      <module name="warehouse" options="-parameters" />
       <module name="xxx_xxx_002" options="-parameters" />
       <module name="xxx_xxx_003" options="-parameters" />
       <module name="xxx_xxx_004" options="-parameters" />

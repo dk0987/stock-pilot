@@ -1,4 +1,4 @@
-package com.sp.common.grpc;
+package com.sp.common.feature_address.grpc;
 
 import com.sp.common.feature_address.dto.AddressResponseDTO;
 import com.sp.common.feature_address.mapper.AddressMapper;

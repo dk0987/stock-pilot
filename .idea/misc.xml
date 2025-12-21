@@ -20,6 +20,9 @@
         <option value="$PROJECT_DIR$/auth-service/pom.xml" />
         <option value="$PROJECT_DIR$/common/pom.xml" />
         <option value="$PROJECT_DIR$/partners/pom.xml" />
+        <option value="$PROJECT_DIR$/product/pom.xml" />
+        <option value="$PROJECT_DIR$/warehouse/pom.xml" />
+        <option value="$PROJECT_DIR$/inventory/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
