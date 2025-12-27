@@ -8,7 +8,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(
-        name = "warehouse"
+        name = "warehouse",
+        indexes = {
+                @Index(
+                        name = "idx_warehouse_warehouse_code",
+                        columnList = "warehouse_code"
+                )
+        }
 )
 public class Warehouse extends BaseAudit {
 
@@ -20,7 +26,7 @@ public class Warehouse extends BaseAudit {
     @Column(nullable = false)
     private String warehouseName ;
 
-    @Column(nullable = false , unique = true)
+    @Column(name = "warehouse_code", nullable = false , unique = true)
     private String warehouseCode ;
 
     @Column(nullable = false)

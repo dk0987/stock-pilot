@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.sp.warehouseGrpcService";
+
+service AddressService {
+  // Creating address
+  rpc CreateAddress (AddressGRPCRequest) returns (AddressGRPCResponse);
+}
+
+// Request contains a address detail
+message AddressGRPCRequest {
+  string street  = 1;
+  string city    = 2;
+  string state   = 3;
+  string zip     = 4;
+  string country = 5;
+  string phone   = 6;
+  string email   = 7;
+}
+
+// Response Contains address response
+message AddressGRPCResponse {
+  Address address = 1;
+}
+
+message Address{
+  int64  id      = 1;
+  string street  = 2;
+  string city    = 3;
+  string state   = 4;
+  string zip     = 5;
+  string country = 6;
+  string phone   = 7;
+  string email   = 8;
+}

@@ -32,6 +32,13 @@ spring:
               - Path=/partners/**
           filters:
             - JwtValidation
+
+        - id: warehouse_service
+          uri: http://warehouse-service:4007
+          predicates:
+            - Path=/warehouse/**
+          filters:
+            - JwtValidation
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
