@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package supplierProduct;
+
+option java_package = "com.example.events";
+option java_outer_classname = "SupplierProductsEvents";
+
+message SupplierProductSuccess {
+  string productId = 1;
+}
+
+message SupplierProductFailed {
+  string productId = 1;
+  string reason = 2;
+}

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class BaseAuditDTO {
+public class BaseAuditResponseDTO {
 
     private boolean       isActive;
     private Long          createdBy;

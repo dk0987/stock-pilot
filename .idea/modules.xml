@@ -7,7 +7,9 @@
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway.iml" filepath="$PROJECT_DIR$/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway-2/gateway-2.iml" filepath="$PROJECT_DIR$/gateway-2/gateway-2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inventory/inventory.iml" filepath="$PROJECT_DIR$/inventory/inventory.iml" />
       <module fileurl="file://$PROJECT_DIR$/partners/partners.iml" filepath="$PROJECT_DIR$/partners/partners.iml" />
+      <module fileurl="file://$PROJECT_DIR$/product/product.iml" filepath="$PROJECT_DIR$/product/product.iml" />
       <module fileurl="file://$PROJECT_DIR$/stock-pilot.iml" filepath="$PROJECT_DIR$/stock-pilot.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/warehouse/warehouse.iml" filepath="$PROJECT_DIR$/warehouse/warehouse.iml" />

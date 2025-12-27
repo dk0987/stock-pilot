@@ -3,7 +3,7 @@ package com.sp.warehouse.mapper;
 
 import com.sp.warehouse.dto.AddressResponseDTO;
 import com.sp.warehouse.dto.WarehouseRequestDTO;
-import com.sp.warehouse.dto.WarehouseResponseDTO;
+import com.sp.warehouse.dto.WarehouseResponseResponseDTO;
 import com.sp.warehouse.model.Warehouse;
 
 public class WarehouseMapper {
@@ -19,12 +19,12 @@ public class WarehouseMapper {
 
     }
 
-    public static WarehouseResponseDTO toWarehouseResponseDTO(
+    public static WarehouseResponseResponseDTO toWarehouseResponseDTO(
             Warehouse warehouse,
             AddressResponseDTO address
     ){
 
-        WarehouseResponseDTO warehouseResponseDTO = new WarehouseResponseDTO();
+        WarehouseResponseResponseDTO warehouseResponseDTO = new WarehouseResponseResponseDTO();
         warehouseResponseDTO.setId(warehouse.getId());
         warehouseResponseDTO.setWarehouseName(warehouse.getWarehouseName());
         warehouseResponseDTO.setWarehouseCode(warehouse.getWarehouseCode());

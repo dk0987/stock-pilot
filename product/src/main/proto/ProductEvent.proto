@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package product;
+
+option java_package = "com.example.events";
+option java_outer_classname = "ProductsEvents";
+
+message ProductCreatedEvent{
+  int64 productId = 1;
+  repeated StockThresholdKAF stockThresholdsDetails = 2;
+  SupplierProductEventKAF supplierProductDetails = 3;
+}
+
+message StockThresholdKAF{
+  int64 warehouseId = 1;
+  int32 minQuantity = 2;
+  int32 maxQuantity = 3;
+}
+
+message SupplierProductEventKAF{
+  int64  supplierId            = 1;
+  string transactionalCurrency = 2;
+}

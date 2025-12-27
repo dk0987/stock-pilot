@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package stockThreshold;
+
+option java_package = "com.example.events";
+option java_outer_classname = "StockThresholdEvents";
+
+message StockThresholdSuccess {
+  string productId = 1;
+}
+
+message StockThresholdFailed {
+  string productId = 1;
+  string reason = 2;
+}

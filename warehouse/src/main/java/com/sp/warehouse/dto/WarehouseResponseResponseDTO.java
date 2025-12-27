@@ -1,12 +1,11 @@
 package com.sp.warehouse.dto;
 
-import com.sp.warehouse.model.Warehouse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WarehouseResponseDTO extends BaseAuditDTO{
+public class WarehouseResponseResponseDTO extends BaseAuditResponseDTO {
 
     private Long               id;
     private String             warehouseName;

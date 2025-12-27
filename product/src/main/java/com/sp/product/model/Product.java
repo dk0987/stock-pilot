@@ -7,7 +7,13 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "product")
+@Table(
+        name = "product",
+        indexes = @Index(
+                name = "product_product_sku",
+                columnList = "product_sku"
+        )
+)
 public class Product extends BaseAudit{
 
     @Id
@@ -17,7 +23,7 @@ public class Product extends BaseAudit{
     @Column(nullable = false)
     private String name ;
 
-    @Column(nullable = false , unique = true)
+    @Column(name = "product_sku",nullable = false , unique = true)
     private String sku;
 
     private String description ;

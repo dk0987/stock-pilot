@@ -1,4 +1,4 @@
-package com.sp.product.model;
+package com.sp.inventory.model;
 
 
 import jakarta.persistence.*;

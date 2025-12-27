@@ -3,7 +3,7 @@ package com.sp.warehouse.service;
 import com.sp.warehouse.dto.AddressRequestDTO;
 import com.sp.warehouse.dto.AddressResponseDTO;
 import com.sp.warehouse.dto.WarehouseRequestDTO;
-import com.sp.warehouse.dto.WarehouseResponseDTO;
+import com.sp.warehouse.dto.WarehouseResponseResponseDTO;
 import com.sp.warehouse.grpc.AddressServiceClient;
 import com.sp.warehouse.mapper.WarehouseMapper;
 import com.sp.warehouse.model.Warehouse;
@@ -28,7 +28,7 @@ public class WarehouseService {
         this.addressServiceClient = addressServiceClient;
     }
 
-    public WarehouseResponseDTO createWarehouse(
+    private WarehouseResponseResponseDTO createWarehouse(
             WarehouseRequestDTO request,
             Long createdBy
     ){
