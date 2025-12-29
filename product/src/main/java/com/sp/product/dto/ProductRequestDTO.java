@@ -1,6 +1,5 @@
 package com.sp.product.dto;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ public class ProductRequestDTO {
     private SupplierProductRequestDTO supplierProductDetail;
 
     @NotNull(message = "Warehouse is necessary to move product ")
-    private Set<WarehouseRequestDTO> warehouseIds;
+    private Set<StockThresholdRequestDTO> stockThresholdRequestDTOS;
 
     @NotNull(message = "Product name is mandatory")
     private String name;

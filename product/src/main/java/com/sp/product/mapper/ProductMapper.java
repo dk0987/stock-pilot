@@ -1,8 +1,12 @@
 package com.sp.product.mapper;
 
+import com.example.productProto.ProductsEvents;
 import com.sp.product.dto.ProductRequestDTO;
 import com.sp.product.dto.ProductResponseDTO;
 import com.sp.product.model.Product;
+
+import java.util.List;
+import java.util.Set;
 
 public class ProductMapper {
 
@@ -38,6 +42,21 @@ public class ProductMapper {
         productResponseDTO.setActive(product.isActive());
 
         return productResponseDTO;
+
+    }
+
+    public static ProductsEvents.ProductCreatedEvent toProductCreatedEvent(
+            Long productId ,
+            ProductsEvents.SupplierProductEventKAF supplierProduct,
+            Set<ProductsEvents.StockThresholdKAF> stockThreshold
+    ){
+
+        return ProductsEvents.ProductCreatedEvent
+                .newBuilder()
+                .setProductId(productId)
+                .setSupplierProductDetails(supplierProduct)
+                .addAllStockThresholdsDetails(stockThreshold)
+                .build();
 
     }
 

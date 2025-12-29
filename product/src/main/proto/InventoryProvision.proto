@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package supplierProduct;
+
+option java_package = "com.example.product";
+option java_outer_classname = "InventoryProvisionEvents";
+
+message InventoryProvisioned {
+  int64 productId = 1;
+}
+
+message InventoryFailed {
+  int64 productId = 1;
+  string reason = 2;
+}

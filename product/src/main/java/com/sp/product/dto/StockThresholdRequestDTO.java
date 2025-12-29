@@ -1,11 +1,11 @@
-package com.sp.inventory.dto;
+package com.sp.product.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class WarehouseRequestDTO {
+public class StockThresholdRequestDTO {
 
     @NotNull(message = "Warehouse is necessary to move product ")
     private Long warehouseId;

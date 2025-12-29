@@ -1,173 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- ========================================================= -->
+    <!-- Basic Project Info                                        -->
+    <!-- ========================================================= -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <!-- Spring Boot parent manages dependency versions -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.8</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.sp</groupId>
-	<artifactId>product</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>product</name>
-	<description>Product service for stock pilot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.sp</groupId>
+    <artifactId>product</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>product</name>
+    <description>Product service for Saga-based stock system</description>
+
+    <!-- ========================================================= -->
+    <!-- Global Properties (Single source of truth)                -->
+    <!-- ========================================================= -->
     <properties>
         <java.version>21</java.version>
+
+        <!-- Protobuf version used everywhere (Kafka events) -->
+        <protobuf.version>3.25.5</protobuf.version>
+
+        <!-- Spring Kafka version managed by Spring Boot -->
     </properties>
+
+    <!-- ========================================================= -->
+    <!-- Dependencies                                              -->
+    <!-- ========================================================= -->
     <dependencies>
 
+        <!-- ================= SPRING CORE ================= -->
+
+        <!-- REST APIs -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- JPA / Hibernate -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Bean validation (@NotNull, @Email, etc.) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Actuator (health, metrics – useful in microservices) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
+        <!-- Optional: Security (remove if not needed yet) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
+        <!-- ================= KAFKA ================= -->
+
+        <!-- Kafka integration (Producer / Consumer / @KafkaListener) -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <!-- ================= PROTOBUF ================= -->
+
+        <!-- Protobuf runtime for Kafka message serialization -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.version}</version>
+        </dependency>
+
+        <!-- ================= DATABASE ================= -->
+
+        <!-- PostgreSQL (Production DB) -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- H2 (Local / Test DB) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ================= DEV & TEST ================= -->
+
+        <!-- Lombok (reduces boilerplate) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Spring Security (includes BCryptPasswordEncoder) -->
+
+        <!-- Spring Boot test utilities -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
+        <!-- Kafka test (Embedded Kafka for integration tests) -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Devtools (hot reload – dev only) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-
-        <!--GRPC -->
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty-shaded</artifactId>
-            <version>1.69.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
-            <version>1.69.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-stub</artifactId>
-            <version>1.69.0</version>
-        </dependency>
-        <dependency> <!-- necessary for Java 9+ -->
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>annotations-api</artifactId>
-            <version>6.0.53</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.devh</groupId>
-            <artifactId>grpc-spring-boot-starter</artifactId>
-            <version>3.1.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>4.29.1</version>
-        </dependency>
 
     </dependencies>
 
-
+    <!-- ========================================================= -->
+    <!-- Build Configuration                                       -->
+    <!-- ========================================================= -->
     <build>
+
+        <!-- Needed for detecting OS when running protoc -->
         <extensions>
-            <!-- Ensure OS compatibility for protoc -->
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
                 <version>1.7.0</version>
             </extension>
         </extensions>
-        <plugins>
-            <!-- Configure maven-compiler-plugin to compile with Java 21 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <release>21</release>
-                </configuration>
-            </plugin>
 
-            <!-- Spring boot / maven  -->
+        <plugins>
+
+            <!-- Spring Boot executable JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- PROTO -->
+            <!-- Protobuf code generation -->
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>0.6.1</version>
+
                 <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:3.25.5:exe:${os.detected.classifier}</protocArtifact>
-                    <pluginId>grpc-java</pluginId>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.68.1:exe:${os.detected.classifier}</pluginArtifact>
+                    <!-- Protoc compiler -->
+                    <protocArtifact>
+                        com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}
+                    </protocArtifact>
                 </configuration>
+
                 <executions>
                     <execution>
                         <goals>
                             <goal>compile</goal>
-                            <goal>compile-custom</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
-
-
 
 </project>

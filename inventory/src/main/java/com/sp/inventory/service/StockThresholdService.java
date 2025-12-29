@@ -1,11 +1,12 @@
 package com.sp.inventory.service;
 
-import com.sp.inventory.dto.WarehouseRequestDTO;
+import com.sp.inventory.dto.StockThresholdRequestDTO;
 import com.sp.inventory.mapper.StockThresholdMapper;
 import com.sp.inventory.model.StockThreshold;
 import com.sp.inventory.repository.StockThresholdRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -15,14 +16,20 @@ public class StockThresholdService {
 
     private final StockThresholdRepository stockThresholdRepository;
 
-    public StockThresholdService(StockThresholdRepository stockThresholdRepository) {
+    public StockThresholdService(
+            StockThresholdRepository stockThresholdRepository
+    ) {
         this.stockThresholdRepository = stockThresholdRepository;
     }
 
-    private void createStockThreshold(Long productId , Set<WarehouseRequestDTO> requests) {
+    @Transactional
+    public void createStockThreshold(
+            Long productId ,
+            Set<StockThresholdRequestDTO> requests
+    ) {
 
         if (requests == null || requests.isEmpty()) {
-            return;
+            throw new RuntimeException("Stock Threshold Request is empty");
         }
 
         try {
