@@ -1,6 +1,7 @@
 package com.sp.inventory.service;
 
 import com.sp.inventory.dto.SupplierProductRequestDTO;
+import com.sp.inventory.grpc.PartnersServiceClient;
 import com.sp.inventory.kafka.producer.InventoryResultProducer;
 import com.sp.inventory.mapper.SupplierProductMapper;
 import com.sp.inventory.model.SupplierProduct;
@@ -12,12 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class SupplierProductService {
 
     private final SupplierProductRepository supplierProductRepository;
+    private final PartnersServiceClient     partnersServiceClient;
 
     public SupplierProductService(
             SupplierProductRepository supplierProductRepository,
-            InventoryResultProducer inventoryResultProducer
+            PartnersServiceClient partnersServiceClient
     ) {
         this.supplierProductRepository = supplierProductRepository;
+        this.partnersServiceClient = partnersServiceClient;
     }
 
     @Transactional
@@ -29,12 +32,18 @@ public class SupplierProductService {
 
         try {
 
+            boolean supplierExist = partnersServiceClient.doesPartnerExist(requestDTO.getSupplierId());
+
+            if (!supplierExist) {
+                throw new RuntimeException("Supplier does not exist");
+            }
+
             supplierProductRepository.findSupplierProduct(requestDTO.getSupplierId(), productId)
-                    .ifPresent(supplierProduct -> {throw new RuntimeException("Supplier product not found");});
+                    .ifPresent(supplierProduct -> {throw new RuntimeException("Supplier product already exists");});
+
 
             SupplierProduct supplierProduct = SupplierProductMapper.toSupplierProduct(requestDTO, productId);
             supplierProductRepository.save(supplierProduct);
-
 
 
         } catch (RuntimeException e) {

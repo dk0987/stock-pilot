@@ -2,8 +2,9 @@ package com.sp.warehouse.mapper;
 
 
 import com.sp.warehouse.dto.AddressResponseDTO;
+import com.sp.warehouse.dto.WarehouseGRPCResponseDTO;
 import com.sp.warehouse.dto.WarehouseRequestDTO;
-import com.sp.warehouse.dto.WarehouseResponseResponseDTO;
+import com.sp.warehouse.dto.WarehouseResponseDTO;
 import com.sp.warehouse.model.Warehouse;
 
 public class WarehouseMapper {
@@ -19,12 +20,12 @@ public class WarehouseMapper {
 
     }
 
-    public static WarehouseResponseResponseDTO toWarehouseResponseDTO(
+    public static WarehouseResponseDTO toWarehouseResponseDTO(
             Warehouse warehouse,
             AddressResponseDTO address
     ){
 
-        WarehouseResponseResponseDTO warehouseResponseDTO = new WarehouseResponseResponseDTO();
+        WarehouseResponseDTO warehouseResponseDTO = new WarehouseResponseDTO();
         warehouseResponseDTO.setId(warehouse.getId());
         warehouseResponseDTO.setWarehouseName(warehouse.getWarehouseName());
         warehouseResponseDTO.setWarehouseCode(warehouse.getWarehouseCode());
@@ -37,6 +38,20 @@ public class WarehouseMapper {
         warehouseResponseDTO.setActive(warehouse.isActive());
         return warehouseResponseDTO;
 
+    }
+
+    public static WarehouseGRPCResponseDTO toWarehouseGRPCResponseDTO(Warehouse warehouse){
+        WarehouseGRPCResponseDTO warehouseGRPCResponseDTO = new WarehouseGRPCResponseDTO();
+        warehouseGRPCResponseDTO.setWarehouseId(warehouse.getId());
+        warehouseGRPCResponseDTO.setMaxQuantity(warehouse.getMaxCapacity());
+        return warehouseGRPCResponseDTO;
+    }
+
+    public static com.sp.warehouseGrpcService.Warehouse toWarehouseGRPC(WarehouseGRPCResponseDTO  warehouse){
+        return  com.sp.warehouseGrpcService.Warehouse.newBuilder()
+                .setWarehouseId(warehouse.getWarehouseId())
+                .setMaxQuantity(warehouse.getMaxQuantity())
+                .build();
     }
 
 }

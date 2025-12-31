@@ -1,7 +1,7 @@
 package com.sp.warehouse.controller;
 
 import com.sp.warehouse.dto.WarehouseRequestDTO;
-import com.sp.warehouse.dto.WarehouseResponseResponseDTO;
+import com.sp.warehouse.dto.WarehouseResponseDTO;
 import com.sp.warehouse.service.WarehouseService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +18,11 @@ public class WarehouseController {
     }
 
     @PostMapping
-    public ResponseEntity<WarehouseResponseResponseDTO> createWarehouse(
+    public ResponseEntity<WarehouseResponseDTO> createWarehouse(
             @Valid @RequestBody         WarehouseRequestDTO request,
             @RequestHeader("X-User-Id") Long createdBy
     ){
-        WarehouseResponseResponseDTO warehouseResponseDTO = warehouseService.createWarehouse(request,createdBy);
+        WarehouseResponseDTO warehouseResponseDTO = warehouseService.createWarehouse(request,createdBy);
 
         if(warehouseResponseDTO != null) {
             return ResponseEntity.ok(warehouseResponseDTO);

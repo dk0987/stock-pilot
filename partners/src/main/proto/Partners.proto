@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+
+option java_multiple_files = true;
+option java_package = "com.sp.partnersGrpcService";
+
+
+service PartnerService{
+  rpc FetchPartnerExist(PartnersGRPCRequest) returns (PartnersGRPCResponse);
+}
+
+message PartnersGRPCRequest{
+  int64 partnerId = 1;
+}
+
+message PartnersGRPCResponse{
+  bool doesExist = 1;
+}

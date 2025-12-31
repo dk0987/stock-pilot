@@ -28,35 +28,74 @@
     <properties>
         <java.version>21</java.version>
         <protobuf.version>3.25.5</protobuf.version>
+        <grpc.version>1.75.0</grpc.version>
     </properties>
 
-    <!-- ========================================================= -->
-    <!-- Dependencies                                              -->
-    <!-- ========================================================= -->
+    <!-- ================= DEPENDENCIES ================= -->
     <dependencies>
+
+        <!-- ================= gRPC ================= -->
+
+        <!-- gRPC Netty transport (shaded to avoid Netty conflicts) -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <version>1.75.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>1.69.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>1.69.0</version>
+        </dependency>
+        <dependency> <!-- necessary for Java 9+ -->
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>annotations-api</artifactId>
+            <version>6.0.53</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-spring-boot-starter</artifactId>
+            <version>3.1.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>4.29.1</version>
+        </dependency>
 
         <!-- ================= SPRING CORE ================= -->
 
+        <!-- Spring MVC + Embedded Tomcat for REST APIs -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Spring Data JPA for ORM and database access -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <!-- Bean validation (Jakarta Validation / Hibernate Validator) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!-- Spring Security for authentication & authorization -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!-- Actuator for health checks, metrics, monitoring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -64,6 +103,7 @@
 
         <!-- ================= KAFKA ================= -->
 
+        <!-- Spring Kafka for event-driven communication (Saga pattern) -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -71,6 +111,7 @@
 
         <!-- ================= PROTOBUF ================= -->
 
+        <!-- Protobuf Java runtime for Kafka & gRPC message models -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
@@ -79,12 +120,14 @@
 
         <!-- ================= DATABASE ================= -->
 
+        <!-- PostgreSQL driver (production database) -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
 
+        <!-- H2 in-memory database (local dev & tests) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -93,6 +136,7 @@
 
         <!-- ================= DEV & TEST ================= -->
 
+        <!-- Lombok to reduce boilerplate code (@Getter, @Builder, etc.) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -100,18 +144,21 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Spring Boot testing support (JUnit, Mockito, Testcontainers support) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- Kafka test utilities (Embedded Kafka broker) -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- Hot reload & developer utilities -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -148,15 +195,26 @@
                 <version>0.6.1</version>
 
                 <configuration>
+                    <!-- Protobuf compiler -->
                     <protocArtifact>
                         com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}
                     </protocArtifact>
+
+                    <!-- gRPC Java code generator -->
+                    <pluginId>grpc-java</pluginId>
+                    <pluginArtifact>
+                        io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
+                    </pluginArtifact>
                 </configuration>
 
                 <executions>
                     <execution>
                         <goals>
+                            <!-- Kafka + gRPC messages -->
                             <goal>compile</goal>
+
+                            <!-- gRPC service stubs -->
+                            <goal>compile-custom</goal>
                         </goals>
                     </execution>
                 </executions>

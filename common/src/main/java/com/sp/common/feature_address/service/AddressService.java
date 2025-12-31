@@ -7,6 +7,7 @@ import com.sp.common.feature_address.modal.Address;
 import com.sp.common.feature_address.repository.AddressRepository;
 import com.sp.commonGrpcService.AddressGRPCRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
+    @Transactional
     public AddressResponseDTO createAddress(AddressGRPCRequest addressRequestDTO) {
 
         Address alreadySavedAddress = getAddressByRequest(AddressMapper.toAddressRequestDTO(addressRequestDTO));
@@ -33,6 +35,7 @@ public class AddressService {
 
     }
 
+    @Transactional
     public AddressResponseDTO updateAddressById(Long id , AddressRequestDTO addressRequestDTO) {
 
         if (id == null || addressRequestDTO == null) {
@@ -55,6 +58,8 @@ public class AddressService {
 
     }
 
+
+    @Transactional
     public AddressResponseDTO getAddressById(Long id) {
 
         Address address = addressRepository.findById(id)
@@ -64,6 +69,7 @@ public class AddressService {
 
     }
 
+    @Transactional
     public Address getAddressByRequest(AddressRequestDTO request) {
 
         return addressRepository.findAddressByDetails(

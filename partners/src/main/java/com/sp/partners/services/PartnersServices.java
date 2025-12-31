@@ -11,6 +11,7 @@ import com.sp.partners.model.Partners;
 import com.sp.partners.repository.PartnersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +24,7 @@ public class PartnersServices {
     @Autowired
     private AddressServiceClient addressServiceClient;
 
+    @Transactional
     public PartnersResponseDTO createPartner(
             PartnersRequestDTO request ,
             Long partnerType,
@@ -60,6 +62,12 @@ public class PartnersServices {
 
 
         return AddressMapper.toAddressResponseDTO(addressGRPCResponse.getAddress());
+
+    }
+
+    public boolean doesPartnerExist(Long partnerId) {
+
+        return partnersRepository.existsById(partnerId);
 
     }
 }

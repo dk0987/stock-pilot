@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WarehouseResponseResponseDTO extends BaseAuditResponseDTO {
+public class WarehouseResponseDTO extends BaseAuditResponseDTO {
 
     private Long               id;
     private String             warehouseName;

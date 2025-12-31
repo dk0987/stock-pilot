@@ -134,6 +134,7 @@ public class UsersService {
         log.info("Toggled user active status for id: {} -> {}", id, user.isActive());
     }
 
+    @Transactional
     private Set<Authority> fetchAndValidateAuthorities(Collection<Long> ids) {
 
         if (ids == null || ids.isEmpty()) {
@@ -152,6 +153,7 @@ public class UsersService {
         return new HashSet<>(list);
     }
 
+    @Transactional
     public Users authenticateUser(String userName, String email, String password) {
 
         if (password == null || password.isBlank()) {
@@ -188,10 +190,12 @@ public class UsersService {
     }
 
 
+    @Transactional
     private Optional<Users> getUserByEmail(String email) {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
+    @Transactional
     private Optional<Users> getUserByUserName(String userName) {
         return Optional.ofNullable(userRepository.findByUserName(userName));
     }

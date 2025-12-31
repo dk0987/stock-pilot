@@ -1,17 +1,20 @@
 package com.sp.warehouse.service;
 
-import com.sp.warehouse.dto.AddressRequestDTO;
-import com.sp.warehouse.dto.AddressResponseDTO;
-import com.sp.warehouse.dto.WarehouseRequestDTO;
-import com.sp.warehouse.dto.WarehouseResponseResponseDTO;
+import com.sp.warehouse.dto.*;
 import com.sp.warehouse.grpc.AddressServiceClient;
 import com.sp.warehouse.mapper.WarehouseMapper;
 import com.sp.warehouse.model.Warehouse;
 import com.sp.warehouse.repository.WarehouseRepository;
+import com.sp.warehouseGrpcService.WarehouseGRPCRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,7 +31,8 @@ public class WarehouseService {
         this.addressServiceClient = addressServiceClient;
     }
 
-    private WarehouseResponseResponseDTO createWarehouse(
+    @Transactional
+    private WarehouseResponseDTO createWarehouse(
             WarehouseRequestDTO request,
             Long createdBy
     ){
@@ -55,7 +59,6 @@ public class WarehouseService {
     }
 
 
-
     private AddressResponseDTO createAddress(AddressRequestDTO request) {
 
         if (request == null){
@@ -70,6 +73,25 @@ public class WarehouseService {
         } else{
             return address;
         }
+
+    }
+
+    public Set<WarehouseGRPCResponseDTO> getAllExistingWarehouses(Set<Long> warehouseIds){
+
+        if (warehouseIds == null || warehouseIds.isEmpty()){
+            throw new IllegalArgumentException("Warehouse Ids can not be null or empty");
+        }
+
+        List<Warehouse> warehouses = warehouseRepository.findAllById(warehouseIds);
+
+        if(warehouses.size() != warehouseIds.size()){
+            throw new IllegalArgumentException("Warehouse Ids are not match");
+        }
+
+        return warehouses
+                .stream()
+                .map(WarehouseMapper::toWarehouseGRPCResponseDTO)
+                .collect(Collectors.toSet());
 
     }
 
