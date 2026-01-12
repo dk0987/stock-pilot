@@ -1,8 +1,8 @@
 package com.sp.inventory.grpc;
 
-import com.example.grpcProto.PartnerServiceGrpc;
-import com.example.grpcProto.PartnersGRPCRequest;
-import com.example.grpcProto.PartnersGRPCResponse;
+import com.sp.grpcProto.PartnerServiceGrpc;
+import com.sp.grpcProto.PartnersGRPCRequest;
+import com.sp.grpcProto.PartnersGRPCResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class PartnersServiceClient {
 
     public PartnersServiceClient(
             @Value("${partners.service.address:localhost}") String host,
-            @Value("${partners.service.grpc.port:9004}")    int port
+            @Value("${partners.service.grpc.port:9005}")    int port
     ) {
 
        log.info("Warehouse GRPC service initiated...");

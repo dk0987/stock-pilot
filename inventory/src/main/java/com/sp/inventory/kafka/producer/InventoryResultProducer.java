@@ -1,6 +1,6 @@
 package com.sp.inventory.kafka.producer;
 
-import com.example.product.InventoryProvisionEvents;
+import com.sp.product.InventoryProvisionEvents;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

@@ -12,6 +12,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 public class ProductService {
 
@@ -38,6 +40,7 @@ public class ProductService {
 
         Product product = ProductMapper.toProduct(request);
         product.setCreatedBy(createdBy);
+        product.setCreatedAt(LocalDateTime.now());
 
         Product createdProduct = productRepository.save(product);
 

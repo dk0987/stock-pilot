@@ -1,8 +1,8 @@
 package com.sp.inventory.kafka.consumer;
 
-import com.example.inventoryProto.ProductsEvents;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.sp.inventory.service.InventoryProvisionService;
+import com.sp.inventoryProto.ProductsEvents;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;

@@ -1,8 +1,8 @@
 package com.sp.inventory.grpc;
 
-import com.example.grpcProto.WarehouseGRPCRequest;
-import com.example.grpcProto.WarehouseGRPCResponse;
-import com.example.grpcProto.WarehouseServiceGrpc;
+import com.sp.grpcProto.WarehouseGRPCRequest;
+import com.sp.grpcProto.WarehouseGRPCResponse;
+import com.sp.grpcProto.WarehouseServiceGrpc;
 import com.sp.inventory.dto.WarehouseGRPCResponseDTO;
 import com.sp.inventory.mapper.WarehouseMapper;
 import io.grpc.ManagedChannel;
@@ -20,7 +20,7 @@ public class WarehouseServiceClient {
 
     public WarehouseServiceClient(
             @Value("${warehouse.service.address:localhost}") String host,
-            @Value("${warehouse.service.grpc.port:9005}")    int port
+            @Value("${warehouse.service.grpc.port:9004}")    int port
     ){
 
         ManagedChannel channel = ManagedChannelBuilder

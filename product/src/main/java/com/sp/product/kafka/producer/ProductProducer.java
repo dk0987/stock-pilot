@@ -1,7 +1,6 @@
 package com.sp.product.kafka.producer;
 
 import com.example.productProto.ProductsEvents;
-import com.sp.product.dto.ProductRequestDTO;
 import com.sp.product.event.ProductCreatedInternalEvent;
 import com.sp.product.mapper.ProductMapper;
 import com.sp.product.mapper.StockThresholdMapper;
@@ -9,7 +8,6 @@ import com.sp.product.mapper.SupplierProductMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -30,9 +28,9 @@ public class ProductProducer {
            ProductCreatedInternalEvent productCreatedInternalEvent
     ) {
         ProductsEvents.ProductCreatedEvent events = ProductMapper.toProductCreatedEvent(
-                productCreatedInternalEvent.getProductId(),
-                SupplierProductMapper.toSupplierEvent(productCreatedInternalEvent.getProductRequest().getSupplierProductDetail()),
-                productCreatedInternalEvent.getProductRequest().getStockThresholdRequestDTOS()
+                productCreatedInternalEvent.productId(),
+                SupplierProductMapper.toSupplierEvent(productCreatedInternalEvent.productRequest().getSupplierProductDetail()),
+                productCreatedInternalEvent.productRequest().getStockThresholdRequestDTOS()
                         .stream()
                         .map(StockThresholdMapper::toStockThresholdEvent)
                         .collect(Collectors.toSet())
@@ -40,7 +38,7 @@ public class ProductProducer {
 
         kafkaTemplate.send(
                   "product.created",
-                        String.valueOf(productCreatedInternalEvent.getProductId()) ,
+                        String.valueOf(productCreatedInternalEvent.productId()) ,
                         events.toByteArray()
                 ).whenComplete((res, ex) -> {
                     if (ex != null) {

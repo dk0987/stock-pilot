@@ -1,8 +1,8 @@
 package com.sp.inventory.mapper;
 
-import com.example.inventoryProto.ProductsEvents;
 import com.sp.inventory.dto.StockThresholdRequestDTO;
 import com.sp.inventory.model.StockThreshold;
+import com.sp.inventoryProto.ProductsEvents;
 
 public class StockThresholdMapper {
 

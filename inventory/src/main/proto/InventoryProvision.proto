@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package supplierProduct;
 
-option java_package = "com.example.product";
+option java_package = "com.sp.product";
 option java_outer_classname = "InventoryProvisionEvents";
 
 message InventoryProvisioned {

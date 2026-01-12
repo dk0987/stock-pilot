@@ -20,9 +20,8 @@ FROM eclipse-temurin:21-jdk AS runner
 WORKDIR /app
 
 # Copy the jar from builder stage
-COPY --from=builder /app/target/warehouse-0.0.1-SNAPSHOT.jar ./app.jar
+COPY --from=builder /app/target/product-0.0.1-SNAPSHOT.jar ./app.jar
 
-EXPOSE 4007
-EXPOSE 9004
+EXPOSE 4001
 
 ENTRYPOINT ["java","-jar","app.jar"]

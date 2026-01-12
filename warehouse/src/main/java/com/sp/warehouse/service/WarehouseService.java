@@ -32,7 +32,7 @@ public class WarehouseService {
     }
 
     @Transactional
-    private WarehouseResponseDTO createWarehouse(
+    public WarehouseResponseDTO createWarehouse(
             WarehouseRequestDTO request,
             Long createdBy
     ){

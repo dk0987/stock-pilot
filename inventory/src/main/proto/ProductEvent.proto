@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product;
 
-option java_package = "com.example.inventoryProto";
+option java_package = "com.sp.inventoryProto";
 option java_outer_classname = "ProductsEvents";
 
 message ProductCreatedEvent{

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 
 option java_multiple_files = true;
-option java_package = "com.example.grpcProto";
+option java_package = "com.sp.grpcProto";
 
 service WarehouseService{
   rpc FetchWarehouseByIds(WarehouseGRPCRequest) returns (WarehouseGRPCResponse);

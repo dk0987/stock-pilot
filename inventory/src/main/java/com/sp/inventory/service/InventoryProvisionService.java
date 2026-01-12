@@ -1,12 +1,12 @@
 package com.sp.inventory.service;
 
-import com.example.inventoryProto.ProductsEvents;
 import com.sp.inventory.dto.StockThresholdRequestDTO;
 import com.sp.inventory.dto.SupplierProductRequestDTO;
 import com.sp.inventory.grpc.PartnersServiceClient;
 import com.sp.inventory.kafka.producer.InventoryResultProducer;
 import com.sp.inventory.mapper.StockThresholdMapper;
 import com.sp.inventory.mapper.SupplierProductMapper;
+import com.sp.inventoryProto.ProductsEvents;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;

@@ -1,7 +1,6 @@
 package com.sp.inventory.mapper;
 
-import com.example.grpcProto.Warehouse;
-import com.example.grpcProto.WarehouseGRPCResponse;
+import com.sp.grpcProto.Warehouse;
 import com.sp.inventory.dto.WarehouseGRPCResponseDTO;
 
 public class WarehouseMapper {

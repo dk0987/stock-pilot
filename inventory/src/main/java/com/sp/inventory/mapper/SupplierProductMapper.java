@@ -1,8 +1,8 @@
 package com.sp.inventory.mapper;
 
-import com.example.inventoryProto.ProductsEvents;
 import com.sp.inventory.dto.SupplierProductRequestDTO;
 import com.sp.inventory.model.SupplierProduct;
+import com.sp.inventoryProto.ProductsEvents;
 
 public class SupplierProductMapper {
 
